@@ -7,16 +7,15 @@ import sqlite3
 import time
 from scipy import stats
 
-# 1. Configuración de la página (¡SIEMPRE PRIMERO EN STREAMLIT!)
+# 1. Configuración de la página (SIEMPRE PRIMERO EN STREAMLIT)
 st.set_page_config(
-    page_title="Simulador de Metrología y Alineación Optomecánica - CIO",
+    page_title="Plataforma Institucional de Metrología y Alineación Optomecánica | CIO",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-
 # =========================================================================
-# 🔒 MÓDULO DE SEGURIDAD CON MARCO HUD MONOCROMÁTICO NEÓN Y FONDO ANIMADO
+# MÓDULO DE AUTENTICACIÓN INSTITUCIONAL DE ACCESO RESTRINGIDO
 # =========================================================================
 
 USUARIOS_PERMITIDOS = [
@@ -27,366 +26,122 @@ USUARIOS_PERMITIDOS = [
 CONTRASEÑA_CORRECTA = "Jggg101031"
 MAX_INTENTOS = 3
 
-# Inicializar variables de estado seguro
 if "intentos" not in st.session_state:
     st.session_state.intentos = 0
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
-# Bloqueo total por seguridad
 if st.session_state.intentos >= MAX_INTENTOS:
-    st.error("❌ Demasiados intentos fallidos. Acceso bloqueado temporalmente.")
+    st.error("Acceso denegado. Se ha superado el número máximo de intentos permitidos.")
     st.stop()
 
-# Interfaz de Inicio de Sesión
 if not st.session_state.autenticado:
     st.markdown("""
         <style>
-            /* Ocultar barra superior e interfaz de fondo Streamlit */
             header, [data-testid="stHeader"] {
                 visibility: hidden;
                 height: 0px;
             }
             .stApp {
-                background-color: #02040a !important;
+                background-color: #0A0C0B !important;
                 overflow-x: hidden;
             }
 
-            /* Fondo Avanzado con Malla Sci-Fi Animada y Fluida */
+            /* Fondo Monocromático Dinámico con Patrón Geométrico Sutil */
             .grid-bg {
                 position: fixed;
                 top: 0; left: 0; width: 100vw; height: 100vh;
                 background: 
-                    linear-gradient(rgba(0, 240, 255, 0.12) 1.5px, transparent 1.5px),
-                    linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1.5px, transparent 1.5px);
-                background-size: 40px 40px, 40px 40px;
-                animation: gridMove 18s linear infinite;
+                    linear-gradient(rgba(31, 36, 33, 0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(31, 36, 33, 0.04) 1px, transparent 1px);
+                background-size: 40px 40px;
+                animation: gridMove 30s linear infinite;
                 z-index: 0;
                 pointer-events: none;
+            }
+
+            .top-global-hud {
+                position: fixed;
+                top: 20px; left: 30px; right: 30px;
+                display: flex;
+                justify-content: space-between;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 11px;
+                color: #8C9490;
+                letter-spacing: 2px;
+                z-index: 10;
+                opacity: 0.8;
+                pointer-events: none;
+            }
+
+            .login-wrapper {
+                position: relative;
+                max-width: 440px;
+                margin: 8vh auto 0 auto;
+                padding: 1px;
+                border-radius: 12px;
+                background: linear-gradient(135deg, #2D3330, #1F2421, #0A0C0B);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            }
+
+            .login-card {
+                position: relative;
+                background: rgba(13, 16, 14, 0.96);
+                backdrop-filter: blur(12px);
+                border-radius: 11px;
+                padding: 35px 30px 25px 30px;
+                z-index: 2;
+            }
+
+            .login-title {
+                color: #F1F3F2;
+                font-size: 16px;
+                font-weight: 600;
+                text-align: center;
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+                margin: 0 0 8px 0;
+            }
+            .login-subtitle {
+                color: #8C9490;
+                font-size: 10px;
+                text-align: center;
+                letter-spacing: 1px;
+                margin-bottom: 25px;
+                font-family: 'Courier New', Courier, monospace;
+                text-transform: uppercase;
             }
 
             @keyframes gridMove {
                 0% { background-position: 0 0, 0 0; }
                 100% { background-position: 40px 40px, 40px 40px; }
             }
-
-            /* Indicadores Globales de la Interfaz en Esquinas Superiores */
-            .top-global-hud {
-                position: fixed;
-                top: 15px; left: 25px; right: 25px;
-                display: flex;
-                justify-content: space-between;
-                font-family: monospace;
-                font-size: 11px;
-                color: #00f0ff;
-                letter-spacing: 1.5px;
-                z-index: 10;
-                opacity: 0.95;
-                pointer-events: none;
-                text-shadow: 0 0 12px rgba(0, 240, 255, 0.85);
-            }
-
-            /* Módulos Flotantes Periféricos */
-            .hud-panel-left, .hud-panel-right {
-                position: fixed;
-                top: 18vh;
-                width: 220px;
-                padding: 16px;
-                background: rgba(3, 8, 20, 0.7);
-                border: 1px solid rgba(0, 240, 255, 0.35);
-                backdrop-filter: blur(10px);
-                border-radius: 12px;
-                font-family: monospace;
-                font-size: 10px;
-                color: #a5f3fc;
-                z-index: 1;
-                pointer-events: none;
-                box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-                animation: sidePanelEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
-
-            .hud-panel-left { left: 4vw; }
-            .hud-panel-right { right: 4vw; }
-
-            .panel-header {
-                color: #00f0ff;
-                font-weight: bold;
-                border-bottom: 1px dashed rgba(0, 240, 255, 0.5);
-                padding-bottom: 4px;
-                margin-bottom: 10px;
-                letter-spacing: 1px;
-                text-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
-            }
-
-            .hud-data-row {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 6px;
-            }
-
-            /* Contenedor Exterior con Borde Monocromático Neón Sólido */
-            .login-wrapper {
-                position: relative;
-                max-width: 460px;
-                margin: 4vh auto 0 auto;
-                padding: 2px;
-                border-radius: 20px;
-                background: linear-gradient(135deg, #00f0ff, #0077ff, #00f0ff);
-                background-size: 200% 200%;
-                animation: borderGlow 4s ease infinite, entranceZoom 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-                box-shadow: 0 0 30px rgba(0, 240, 255, 0.35);
-            }
-
-            /* Aureola Fina Giratoria Exterior única (Simplificada) */
-            .aureola-halo {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 520px;
-                height: 520px;
-                transform: translate(-50%, -50%);
-                border: 1.5px dashed rgba(0, 240, 255, 0.7);
-                border-radius: 50%;
-                animation: haloRotate 25s linear infinite;
-                pointer-events: none;
-                z-index: 0;
-                box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
-            }
-
-            /* Tarjeta Interior de Login con Glassmorphism Monocromático */
-            .login-card {
-                position: relative;
-                background: rgba(4, 7, 17, 0.96);
-                backdrop-filter: blur(16px);
-                border-radius: 18px;
-                padding: 25px 25px 15px 25px;
-                z-index: 2;
-            }
-
-            /* Barra de Telemetría Superior */
-            .status-bar-top {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-family: monospace;
-                font-size: 10px;
-                color: #00f0ff;
-                letter-spacing: 1px;
-                margin-bottom: 12px;
-                border-bottom: 1px solid rgba(0, 240, 255, 0.3);
-                padding-bottom: 6px;
-                text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
-            }
-
-            .loading-bar-container {
-                width: 100%;
-                height: 3px;
-                background: rgba(0, 240, 255, 0.15);
-                border-radius: 2px;
-                overflow: hidden;
-                margin-bottom: 15px;
-            }
-
-            .loading-bar-fill {
-                width: 40%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, #00f0ff, transparent);
-                box-shadow: 0 0 8px #00f0ff;
-                animation: loadingSweep 1.8s ease-in-out infinite;
-            }
-
-            /* Contenedor HUD Central Simplificado (Sin exceso de animaciones) */
-            .hud-box {
-                position: relative;
-                width: 120px;
-                height: 120px;
-                margin: 0 auto 12px auto;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                overflow: hidden;
-            }
-
-            /* Esquinas HUD Estáticas/Limpias */
-            .corner {
-                position: absolute;
-                width: 18px;
-                height: 18px;
-                border-color: #00f0ff;
-                border-style: solid;
-                z-index: 2;
-            }
-            .top-left { top: 2px; left: 2px; border-width: 2px 0 0 2px; }
-            .top-right { top: 2px; right: 2px; border-width: 2px 2px 0 0; }
-            .bottom-left { bottom: 2px; left: 2px; border-width: 0 0 2px 2px; }
-            .bottom-right { bottom: 2px; right: 2px; border-width: 0 2px 2px 0; }
-
-            /* Único Anillo Giratorio Interno */
-            .hud-ring-outer {
-                position: absolute;
-                width: 85px;
-                height: 85px;
-                border: 1px dashed rgba(0, 240, 255, 0.6);
-                border-radius: 50%;
-                animation: rotateRight 12s linear infinite;
-            }
-
-            /* Retícula Crosshair */
-            .hud-cross-h { position: absolute; width: 75px; height: 1px; background: rgba(0, 240, 255, 0.5); }
-            .hud-cross-v { position: absolute; width: 1px; height: 75px; background: rgba(0, 240, 255, 0.5); }
-
-            /* Punto Láser Central Cian Neón */
-            .hud-dot {
-                position: absolute;
-                width: 6px;
-                height: 6px;
-                background-color: #00f0ff;
-                border-radius: 50%;
-                box-shadow: 0 0 12px #00f0ff;
-                z-index: 3;
-            }
-
-            /* Scanline Vertical Suave */
-            .hud-scanline {
-                position: absolute;
-                top: -100%;
-                left: 0;
-                width: 100%;
-                height: 30%;
-                background: linear-gradient(180deg, rgba(0, 240, 255, 0) 0%, rgba(0, 240, 255, 0.4) 100%);
-                animation: scanMove 3s infinite ease-in-out;
-                z-index: 1;
-            }
-
-            /* Títulos del Formulario */
-            .login-title {
-                color: #ffffff;
-                font-size: 17px;
-                font-weight: 700;
-                text-align: center;
-                letter-spacing: 1px;
-                text-transform: uppercase;
-                margin: 0;
-                text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
-            }
-            .login-subtitle {
-                color: #00f0ff;
-                font-size: 10px;
-                text-align: center;
-                letter-spacing: 0.5px;
-                opacity: 0.9;
-                margin-top: 4px;
-                margin-bottom: 12px;
-                font-family: monospace;
-            }
-
-            div[data-baseweb="input"] input:focus {
-                border-color: #00f0ff !important;
-                box-shadow: 0 0 15px rgba(0, 240, 255, 0.7) !important;
-            }
-
-            @keyframes haloRotate {
-                from { transform: translate(-50%, -50%) rotate(0deg); }
-                to { transform: translate(-50%, -50%) rotate(360deg); }
-            }
-
-            @keyframes entranceZoom {
-                0% { opacity: 0; transform: scale(0.94) translateY(-15px); }
-                100% { opacity: 1; transform: scale(1) translateY(0); }
-            }
-
-            @keyframes sidePanelEntrance {
-                0% { opacity: 0; transform: translateY(20px); }
-                100% { opacity: 1; transform: translateY(0); }
-            }
-
-            @keyframes borderGlow {
-                0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
-            }
-
-            @keyframes loadingSweep {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(250%); }
-            }
-
-            @keyframes rotateRight {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-
-            @keyframes scanMove {
-                0% { top: -40%; }
-                50% { top: 100%; }
-                100% { top: -40%; }
-            }
-
-            @media (max-width: 1024px) {
-                .hud-panel-left, .hud-panel-right, .aureola-halo { display: none; }
-            }
         </style>
 
         <div class="grid-bg"></div>
 
         <div class="top-global-hud">
-            <span>● SYSTEM: ONLINE</span>
-            <span>ENCRYPTION: AES-256</span>
-            <span>NODE: CIO-OPTICS-LAB</span>
-        </div>
-
-        <div class="hud-panel-left">
-            <div class="panel-header">DIAGNOSTICO_LAB</div>
-            <div class="hud-data-row"><span>INTERFEROMETRO:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">ESTABLE</span></div>
-            <div class="hud-data-row"><span>SENSORES PSD:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">CALIBRADOS</span></div>
-            <div class="hud-data-row"><span>HAZ LASER:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">TEM00</span></div>
-            <div class="hud-data-row"><span>METROLOGÍA:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">ACTIVA</span></div>
-        </div>
-
-        <div class="hud-panel-right">
-            <div class="panel-header">TELEMETRIA_SISTEMA</div>
-            <div class="hud-data-row"><span>ESTACIÓN:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">CIO-LEÓN</span></div>
-            <div class="hud-data-row"><span>ADQUISICIÓN:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">100 kS/s</span></div>
-            <div class="hud-data-row"><span>BANCADA:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">OPTOMECÁNICA</span></div>
-            <div class="hud-data-row"><span>ESTABILIDAD:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">λ/10</span></div>
+            <span>CENTRO DE INVESTIGACIONES EN ÓPTICA - LEÓN, GTO.</span>
+            <span>SISTEMA DE GESTIÓN METROLÓGICA</span>
         </div>
     """, unsafe_allow_html=True)
     
-    col_left, col_center, col_right = st.columns([1, 1.3, 1])
+    _, col_center, _ = st.columns([1, 1.2, 1])
     
     with col_center:
         st.markdown("""
             <div class="login-wrapper">
-                <div class="aureola-halo"></div>
                 <div class="login-card">
-                    <div class="status-bar-top">
-                        <span>SYS.STATUS: ONLINE</span>
-                        <span>LINK: 100% SECURE</span>
-                    </div>
-                    <div class="loading-bar-container">
-                        <div class="loading-bar-fill"></div>
-                    </div>
-                    <div class="hud-box">
-                        <div class="corner top-left"></div>
-                        <div class="corner top-right"></div>
-                        <div class="corner bottom-left"></div>
-                        <div class="corner bottom-right"></div>
-                        <div class="hud-cross-h"></div>
-                        <div class="hud-cross-v"></div>
-                        <div class="hud-ring-outer"></div>
-                        <div class="hud-dot"></div>
-                        <div class="hud-scanline"></div>
-                    </div>
-                    <div class="login-title">Autenticación Espectral</div>
-                    <div class="login-subtitle">● SISTEMA DE METROLOGÍA Y ALINEACIÓN ÓPTICA</div>
+                    <div class="login-title">Autenticación de Acceso</div>
+                    <div class="login-subtitle">Plataforma de Ingenierías Optomecánicas</div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
         
         with st.form("formulario_login"):
-            correo = st.text_input("✉️ Correo electrónico autorizado:", placeholder="ejemplo@correo.com")
-            password = st.text_input("🔑 Contraseña:", type="password", placeholder="••••••••") 
-            boton_ingresar = st.form_submit_button("Acceder al Sistema", use_container_width=True)
+            correo = st.text_input("Credencial Institucional (Correo Electrónico):", placeholder="usuario@cio.mx")
+            password = st.text_input("Clave de Acceso:", type="password", placeholder="••••••••") 
+            boton_ingresar = st.form_submit_button("Validar Credenciales", use_container_width=True)
             
             if boton_ingresar:
                 correo_ingresado = correo.strip().lower()
@@ -396,13 +151,13 @@ if not st.session_state.autenticado:
                     st.session_state.autenticado = True
                     st.session_state.intentos = 0
                     
-                    with st.spinner("🔍 Analizando matriz y calibrando transductores..."):
-                        time.sleep(0.8)
+                    with st.spinner("Estableciendo enlace seguro con transductores y cargando matrices de calibración..."):
+                        time.sleep(1.0)
                     st.rerun()
                 else:
                     st.session_state.intentos += 1
                     intentos_restantes = MAX_INTENTOS - st.session_state.intentos
-                    st.error(f"Credenciales incorrectas. Intentos restantes: {intentos_restantes}")
+                    st.error(f"Credenciales no válidas. Intentos restantes: {intentos_restantes}")
                     st.stop()
 
 if not st.session_state.autenticado:
@@ -410,10 +165,9 @@ if not st.session_state.autenticado:
 
 
 # =========================================================================
-# 👇 CÓDIGO DEL SIMULADOR DE METROLOGÍA ÓPTICA (ESTÉTICA MONOCROMÁTICA NEÓN)
+# BANCO DE SIMULACIÓN METROLÓGICA (ESTÉTICA MONOCROMÁTICA NEÓN OSCURO)
 # =========================================================================
 
-# --- BASE DE DATOS SQLITE ---
 DB_NAME = "metrologia_optica.db"
 
 def init_db():
@@ -469,10 +223,9 @@ def clear_db():
     conn.commit()
     conn.close()
 
-# Inicializar Base de Datos
 init_db()
 
-# --- ESTILOS CSS PERSONALIZADOS (MONOCROMÁTICO NEÓN CIAN & SLIM LAYOUT) ---
+# --- ESTILOS CSS MONOCROMÁTICOS AVANZADOS (NEO-DARK PALETTE) ---
 st.markdown("""
     <style>
         header, [data-testid="stHeader"], [data-testid="stToolbar"] {
@@ -483,23 +236,23 @@ st.markdown("""
         }
 
         .block-container {
-            padding-top: 1.2rem !important;
+            padding-top: 1.5rem !important;
             padding-bottom: 2rem !important;
             padding-left: 2rem !important;
             padding-right: 2rem !important;
             max-width: 100% !important;
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.6s ease-out;
         }
 
         .stApp {
-            background-color: #02040a !important;
-            color: #e0f2fe !important;
+            background-color: #0A0C0B !important;
+            color: #F1F3F2 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Estilo de la Barra Lateral */
         [data-testid="stSidebar"] {
-            background-color: #040816 !important;
-            border-right: 1px solid rgba(0, 240, 255, 0.2) !important;
+            background-color: #121513 !important;
+            border-right: 1px solid #1F2421 !important;
         }
 
         [data-testid="stSidebar"] > div:first-child {
@@ -507,102 +260,55 @@ st.markdown("""
         }
 
         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
-            color: #00f0ff !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
+            color: #F1F3F2 !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 15px !important;
-            margin-bottom: 10px !important;
-            border-bottom: 1px solid rgba(0, 240, 255, 0.2) !important;
+            letter-spacing: 1.5px;
+            margin-top: 18px !important;
+            margin-bottom: 8px !important;
+            border-bottom: 1px solid #1F2421 !important;
             padding-bottom: 4px;
-            text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
         }
 
-        /* Botones Interactivos Monocromáticos */
         div.stButton > button {
-            background: linear-gradient(135deg, #050d21 0%, #081b3a 100%) !important;
-            color: #00f0ff !important;
-            border: 1px solid rgba(0, 240, 255, 0.35) !important;
-            border-radius: 8px !important;
-            font-weight: 600 !important;
-            transition: all 0.2s ease !important;
-            box-shadow: 0 0 8px rgba(0, 240, 255, 0.1);
+            background: #1F2421 !important;
+            color: #F1F3F2 !important;
+            border: 1px solid #2D3330 !important;
+            border-radius: 6px !important;
+            font-weight: 500 !important;
+            font-size: 13px !important;
+            transition: all 0.25s ease !important;
         }
         div.stButton > button:hover {
-            background: #00f0ff !important;
-            color: #02040a !important;
-            box-shadow: 0px 0px 15px rgba(0, 240, 255, 0.6) !important;
-            border-color: #00f0ff !important;
+            background: #2D3330 !important;
+            border-color: #8C9490 !important;
+            color: #FFFFFF !important;
             transform: translateY(-1px);
         }
 
-        button[aria-label="Increase value"], 
-        button[aria-label="Decrease value"],
-        div[data-baseweb="spinbutton"] button,
-        [data-testid="stNumberInputStepDown"],
-        [data-testid="stNumberInputStepUp"] {
-            color: #00f0ff !important;
-            background-color: #050d21 !important;
-            border-color: rgba(0, 240, 255, 0.3) !important;
-        }
-
-        button[aria-label="Increase value"]:hover, 
-        button[aria-label="Decrease value"]:hover,
-        div[data-baseweb="spinbutton"] button:hover,
-        [data-testid="stNumberInputStepDown"]:hover,
-        [data-testid="stNumberInputStepUp"]:hover {
-            background-color: #00f0ff !important;
-            color: #02040a !important;
-            box-shadow: 0px 0px 10px rgba(0, 240, 255, 0.5) !important;
-        }
-
         div[data-baseweb="input"], div[data-baseweb="select"] > div {
-            background-color: #050d21 !important;
-            border: 1px solid rgba(0, 240, 255, 0.25) !important;
-            color: #ffffff !important;
+            background-color: #121513 !important;
+            border: 1px solid #1F2421 !important;
+            color: #F1F3F2 !important;
             border-radius: 6px !important;
         }
 
         div[data-baseweb="input"]:hover, div[data-baseweb="select"] > div:hover {
-            border-color: rgba(0, 240, 255, 0.6) !important;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2) !important;
+            border-color: #2D3330 !important;
         }
 
-        /* Tarjetas de Métricas Neón Cian */
         .metric-card-container {
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            background: linear-gradient(135deg, #040816 0%, #061028 100%);
-            border: 1px solid rgba(0, 240, 255, 0.3); 
+            background: #121513;
+            border: 1px solid #1F2421; 
             padding: 16px 20px; 
-            border-radius: 12px; 
+            border-radius: 8px; 
             margin-top: 15px; 
             margin-bottom: 25px;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.12);
-        }
-
-        div.btn-confirm-yes > div.stButton > button {
-            background: linear-gradient(135deg, #022c22 0%, #065f46 100%) !important;
-            color: #34d399 !important;
-            border: 1px solid #065f46 !important;
-        }
-        div.btn-confirm-yes > div.stButton > button:hover {
-            background: #34d399 !important;
-            color: #000000 !important;
-            box-shadow: 0px 0px 12px rgba(52, 211, 153, 0.5);
-        }
-
-        div.btn-confirm-cancel > div.stButton > button {
-            background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%) !important;
-            color: #f87171 !important;
-            border: 1px solid #7f1d1d !important;
-        }
-        div.btn-confirm-cancel > div.stButton > button:hover {
-            background: #f87171 !important;
-            color: #000000 !important;
-            box-shadow: 0px 0px 12px rgba(248, 113, 113, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
         @keyframes fadeIn {
@@ -612,144 +318,146 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- DICCIONARIOS DE TRADUCCIÓN ---
 TEXTS = {
     "ES": {
-        "title": "Simulador Metrológico de Alineación y Óptica Coherente - CIO",
-        "lang_select": "Idioma / Language",
-        "unit_select": "Sistema de Unidades / Unit System",
-        "metric": "Métrico (cm, metros)",
-        "imperial": "Imperial (pulgadas, yardas)",
-        "profile_select": "Configuración Experimental / Banco Óptico",
-        "profile_placeholder": "-- Seleccione un Arreglo Experimental --",
-        "p1": "Alineación de micro-espejos MEMS (Rango ultra-corto)",
-        "p2": "Interferometría de Michelson en banco (Rango corto)",
-        "p3": "Caracterización de láseres de He-Ne (Rango medio)",
-        "p4": "Prueba de frente de onda para lentes asféricas (Rango medio)",
-        "p5": "Arreglo colimador para fibras ópticas monomodo (Rango medio-largo)",
-        "p6": "Sistema de puntería láser para LIDAR atmosférico (Rango largo)",
-        "p7": "Banco óptico para holografía digital (Rango medio)",
-        "p8": "Calibración de auto-colimadores digitales (Rango medio)",
-        "p9": "Optical Trapping / Pinzas Ópticas (Rango ultra-corto)",
-        "p10": "Espectroscopía Raman con acoplamiento confocal (Rango corto)",
-        "p11": "Transmisión de espacio libre FSO (Free Space Optics) (Rango extremo)",
-        "p12": "Sistema láser de alta potencia para corte Nd:YAG (Rango medio)",
-        "p13": "Metrología de superficies ópticas por deflectometría (Rango corto)",
-        "p14": "Seguimiento optoelectrónico de blancos dinámicos (Rango largo)",
-        "p15": "Interferometría láser de alta precisión para gravimetría (Rango medio)",
-        "p16": "Colimación de telescopios astronómicos de investigación (Rango extremo)",
-        "p17": "Alineación sub-micrométrica para óptica integrada (Rango ultra-corto)",
-        "p18": "Sistemas de guía láser para óptica adaptativa (Rango extremo)",
-        "p19": "Caracterización de perfiles de intensidad TEM00 (Rango medio)",
-        "p20": "Óptica no lineal en cristales BBO (Rango corto)",
-        "p21": "Sensor de frente de onda Shack-Hartmann (Rango corto)",
-        "p22": "Metrología láser de grandes distancias / teodolito óptico (Rango largo)",
-        "p23": "Arreglos fotónicos integrados en silicio (Rango ultra-corto)",
-        "p24": "Litografía óptica de interferencia láser (Rango muy corto)",
-        "p25": "Monitoreo interferométrico de deformación estructural (Rango medio)",
+        "title": "Centro de Investigaciones en Óptica (CIO) | Sistema de Alineación Optomecánica",
+        "lang_select": "Idioma Institucional",
+        "unit_select": "Sistema Dimensional",
+        "metric": "Métrico (Centímetros, Metros)",
+        "imperial": "Imperial (Pulgadas, Yardas)",
+        "profile_select": "Línea Experimental de Investigación",
+        "profile_placeholder": "-- Seleccione la Disciplina Experimental --",
+        
+        # Carreras actualizadas y especializadas (Sin etiquetas de rango)
+        "p1": "Ingeniería de Micro-sistemas MEMS y Dispositivos Difractivos",
+        "p2": "Interferometría Láser de Alta Coherencia y Fase Óptica",
+        "p3": "Caracterización Espectrofotométrica de Láseres de Estado Sólido",
+        "p4": "Metrología de Superficies Asféricas y Frente de Onda",
+        "p5": "Diseño y Acoplamiento de Arreglos Fotónicos Monomodo",
+        "p6": "Sistemas de Percepción Láser Remoto LIDAR Atmosférico",
+        "p7": "Óptica Coherente y Holografía Computacional Digital",
+        "p8": "Calibración Metrológica de Instrumentación Autocolimadora",
+        "p9": "Micro-manipulación por Fuerzas de Gradiente Óptico",
+        "p10": "Espectroscopía Raman Confocal de Alta Resolución Espacial",
+        "p11": "Comunicaciones Ópticas en Espacio Libre FSO de Gran Cobertura",
+        "p12": "Sistemas Láser de Potencia para Manufactura de Materiales Avanzados",
+        "p13": "Topografía Óptica Superficial mediante Deflectometría Dinámica",
+        "p14": "Seguimiento Optoelectrónico de Blancos en Trayectoria Variable",
+        "p15": "Interferometría de Alta Estabilidad para Gravimetría Geofísica",
+        "p16": "Alineación de Óptica Astronómica y Telescopios de Investigación",
+        "p17": "Nanofabricación y Alineación Sub-micrométrica en Óptica Integrada",
+        "p18": "Sistemas de Guía Láser para Corrección de Aberraciones Atmosféricas",
+        "p19": "Análisis Matricial de Modos Transversales y Perfiles de Intensidad",
+        "p20": "Óptica No Lineal y Generación de Armónicos en Cristales BBO",
+        "p21": "Sensores de Frente de Onda de Alta Dinámica Shack-Hartmann",
+        "p22": "Geodesia Óptica de Precisión y Metrología de Grandes Distancias",
+        "p23": "Circuitos Fotónicos Integrados en Sustratos de Silicio",
+        "p24": "Litografía de Interferencia Coherente y Nanoestructuración",
+        "p25": "Monitoreo Interferométrico de Deformación en Estructuras Complejas",
 
-        "params": "Parámetros Optomecánicos",
-        "phys_params": "Óptica Coherente y Entorno",
-        "reset_btn": "Reiniciar Parámetros a 0",
-        "save_btn": "💾 Registrar Medición (DB)",
-        "export_csv": "📥 Exportar Historial (CSV)",
-        "h_mira": "Eje de referencia óptica",
-        "h_extra": "Desplazamiento micrométrico del haz",
-        "dist_input": "Distancia de propagación en bancada",
-        "ref_angle_input": "Inclinación inicial del banco (°)",
-        "laser_div": "Divergencia del haz (mrad)",
-        "temp_input": "Temperatura de laboratorio (°C)",
+        "params": "Parámetros de Configuración Óptica",
+        "phys_params": "Variables Ambientales y Coherencia",
+        "reset_btn": "Restablecer Parámetros",
+        "save_btn": "Registrar Medición en Base de Datos",
+        "export_csv": "Exportar Registros (CSV)",
+        "h_mira": "Eje Óptico de Referencia",
+        "h_extra": "Desplazamiento Lineal Micrométrico",
+        "dist_input": "Longitud de Propagación en Banco",
+        "ref_angle_input": "Inclinación Inicial del Banco (°)",
+        "laser_div": "Divergencia del Haz (mrad)",
+        "temp_input": "Temperatura del Laboratorio (°C)",
         "press_input": "Presión Atmosférica (hPa)",
-        "earth_curv": "Activar corrección por curvatura/refracción",
+        "earth_curv": "Corrección por Refracción Atmosférica y Geometría Terrestre",
         "cm": "cm",
         "m": "m",
-        "in": "pulgadas",
-        "yd": "yardas",
-        "laser_label": "Eje Óptico Teórico",
-        "sight_label": "Eje del Haz Ajustado",
+        "in": "in",
+        "yd": "yd",
+        "laser_label": "Eje Teórico de Propagación",
+        "sight_label": "Eje del Haz Corregido",
         "target_center": "Centro del Sensor PSD",
-        "target_point": "Centroide del Haz Láser",
-        "title_graph": "Propagación",
+        "target_point": "Centroide del Spot",
+        "title_graph": "Propagación Tridimensional del Haz",
         "req_angle": "Ángulo de Corrección (α)",
         "diff_height": "Desviación Lineal Total",
-        "sight_angle": "Ángulo de Inclinación del Haz (α)",
-        "angular_adj": "Ajuste Angular (Resolución)",
+        "sight_angle": "Inclinación del Haz (α)",
+        "angular_adj": "Resolución de Ajuste Angular",
         "direction": "Sentido de Corrección",
         "direction_up": "Ascendente (+Z)",
         "direction_down": "Descendente (-Z)",
-        "spot_size_lbl": "Diámetro del Spot (1/e²)",
+        "spot_size_lbl": "Diámetro de Cintura (1/e²)",
         "curv_drop_lbl": "Corrección Atmosférica",
         "uncertainty_lbl": "Incertidumbre Expandida (SciPy)",
-        "history_title": "Historial Metrológico en Base de Datos (SQLite)",
-        "clear_history": "Borrar Base de Datos",
-        "confirm_clear_msg": "¿Estás seguro de que deseas vaciar el registro metrológico?",
-        "confirm_yes": "✔ Sí, Borrar",
-        "confirm_cancel": "✖ Cancelar",
-        "empty_history": "No hay registros experimentales guardados en la base de datos.",
-        "select_prompt": "⚠️ Por favor, seleccione una Configuración Experimental / Banco Óptico en la barra lateral para iniciar la simulación metrológica.",
-        "record_saved": "✅ Medición metrológica registrada permanentemente en SQLite.",
-        "target_2d_title": "🎯 Perfil Transversal 2D (Sensor PSD / Perfilómetro)"
+        "history_title": "Historial de Registros Metrológicos (SQLite)",
+        "clear_history": "Vaciar Base de Datos",
+        "confirm_clear_msg": "Confirme la eliminación permanente del registro metrológico:",
+        "confirm_yes": "Confirmar Eliminación",
+        "confirm_cancel": "Cancelar Operación",
+        "empty_history": "No existen registros experimentales almacenados en la base de datos.",
+        "select_prompt": "Seleccione una Línea Experimental de Investigación en el panel lateral para inicializar el sistema de simulación.",
+        "record_saved": "Medición registrada exitosamente en el sistema SQLite.",
+        "target_2d_title": "Perfil Transversal de Distribución Energética (Sensor PSD)"
     },
     "EN": {
-        "title": "Metrological Simulator of Coherent Alignment & Optics - CIO",
-        "lang_select": "Language / Idioma",
-        "unit_select": "Unit System / Sistema de Unidades",
-        "metric": "Metric (cm, meters)",
-        "imperial": "Imperial (inches, yards)",
-        "profile_select": "Experimental Setup / Optical Bench",
-        "profile_placeholder": "-- Select an Experimental Setup --",
-        "p1": "MEMS Micro-mirror Alignment (Ultra-short Range)",
-        "p2": "Benchtop Michelson Interferometry (Short Range)",
-        "p3": "He-Ne Laser Characterization (Medium Range)",
-        "p4": "Aspheric Lens Wavefront Testing (Medium Range)",
-        "p5": "Single-mode Fiber Collimator Array (Medium-Long Range)",
-        "p6": "Atmospheric LIDAR Laser Targeting System (Long Range)",
-        "p7": "Digital Holography Optical Bench (Medium Range)",
-        "p8": "Digital Autocollimator Calibration (Medium Range)",
-        "p9": "Optical Tweezers Setup (Ultra-short Range)",
-        "p10": "Confocal Raman Spectroscopy Coupling (Short Range)",
-        "p11": "Free Space Optics (FSO) Transmission (Extreme Range)",
-        "p12": "Nd:YAG High-Power Laser Cutting System (Medium Range)",
-        "p13": "Optical Surface Metrology by Deflectometry (Short Range)",
-        "p14": "Optoelectronic Dynamic Target Tracking (Long Range)",
-        "p15": "High-Precision Laser Interferometry for Gravimetry (Medium Range)",
-        "p16": "Research Astronomical Telescope Collimation (Extreme Range)",
-        "p17": "Sub-micrometric Alignment for Integrated Optics (Ultra-short Range)",
-        "p18": "Adaptive Optics Laser Guide Star Systems (Extreme Range)",
-        "p19": "TEM00 Intensity Profile Characterization (Medium Range)",
-        "p20": "Nonlinear Optics in BBO Crystals (Short Range)",
-        "p21": "Shack-Hartmann Wavefront Sensor (Short Range)",
-        "p22": "Long-Range Laser Metrology / Optical Theodolite (Long Range)",
-        "p23": "Silicon Integrated Photonic Arrays (Ultra-short Range)",
-        "p24": "Laser Interference Optical Lithography (Very Short Range)",
-        "p25": "Interferometric Structural Strain Monitoring (Medium Range)",
+        "title": "Optics Research Center (CIO) | Optomechanical Alignment System",
+        "lang_select": "Institutional Language",
+        "unit_select": "Dimensional System",
+        "metric": "Metric (Centimeters, Meters)",
+        "imperial": "Imperial (Inches, Yards)",
+        "profile_select": "Experimental Research Line",
+        "profile_placeholder": "-- Select Experimental Discipline --",
+        
+        "p1": "MEMS Micro-systems and Diffractive Devices Engineering",
+        "p2": "High Coherence Laser Interferometry and Optical Phase",
+        "p3": "Spectrophotometric Characterization of Solid-State Lasers",
+        "p4": "Aspheric Surface Metrology and Wavefront Analysis",
+        "p5": "Single-mode Photonic Array Design and Coupling",
+        "p6": "Atmospheric LIDAR Remote Laser Sensing Systems",
+        "p7": "Coherent Optics and Digital Computational Holography",
+        "p8": "Metrological Calibration of Autocollimating Instrumentation",
+        "p9": "Optical Gradient Force Micro-manipulation",
+        "p10": "High Spatial Resolution Confocal Raman Spectroscopy",
+        "p11": "Large Coverage Free Space Optics (FSO) Communications",
+        "p12": "High-Power Laser Systems for Advanced Material Manufacturing",
+        "p13": "Surface Optical Topography via Dynamic Deflectometry",
+        "p14": "Optoelectronic Target Tracking in Variable Trajectories",
+        "p15": "High Stability Interferometry for Geophysical Gravimetry",
+        "p16": "Astronomical Optics and Research Telescope Alignment",
+        "p17": "Sub-micrometric Nanofabrication and Alignment in Integrated Optics",
+        "p18": "Laser Guide Star Systems for Atmospheric Aberration Correction",
+        "p19": "Transverse Mode Matrix Analysis and Intensity Profiles",
+        "p20": "Nonlinear Optics and Harmonic Generation in BBO Crystals",
+        "p21": "High Dynamics Shack-Hartmann Wavefront Sensors",
+        "p22": "Precision Optical Geodesy and Long-Range Metrology",
+        "p23": "Silicon Substrate Integrated Photonic Circuits",
+        "p24": "Coherent Interference Lithography and Nano-structuring",
+        "p25": "Interferometric Strain Monitoring in Complex Structures",
 
-        "params": "Optomechanical Parameters",
-        "phys_params": "Coherent Optics & Environment",
-        "reset_btn": "Reset Parameters to 0",
-        "save_btn": "💾 Save Measurement (DB)",
-        "export_csv": "📥 Export History (CSV)",
+        "params": "Optical Configuration Parameters",
+        "phys_params": "Environmental Variables and Coherence",
+        "reset_btn": "Reset Parameters",
+        "save_btn": "Log Measurement to Database",
+        "export_csv": "Export Records (CSV)",
         "h_mira": "Optical Reference Axis",
-        "h_extra": "Micrometric Beam Displacement",
-        "dist_input": "Optical Bench Propagation Distance",
+        "h_extra": "Micrometric Linear Displacement",
+        "dist_input": "Optical Bench Propagation Length",
         "ref_angle_input": "Initial Bench Inclination (°)",
         "laser_div": "Beam Divergence (mrad)",
         "temp_input": "Laboratory Temperature (°C)",
         "press_input": "Atmospheric Pressure (hPa)",
-        "earth_curv": "Enable Curvature/Refraction Correction",
+        "earth_curv": "Atmospheric Refraction and Terrestrial Curvature Correction",
         "cm": "cm",
         "m": "m",
-        "in": "inches",
-        "yd": "yards",
-        "laser_label": "Theoretical Optical Axis",
-        "sight_label": "Aligned Beam Axis",
+        "in": "in",
+        "yd": "yd",
+        "laser_label": "Theoretical Propagation Axis",
+        "sight_label": "Corrected Beam Axis",
         "target_center": "PSD Sensor Center",
-        "target_point": "Laser Beam Centroid",
-        "title_graph": "Propagation",
+        "target_point": "Spot Centroid",
+        "title_graph": "Three-Dimensional Beam Propagation",
         "req_angle": "Correction Angle (α)",
         "diff_height": "Total Linear Deviation",
-        "sight_angle": "Beam Inclination Angle (α)",
-        "angular_adj": "Angular Adjustment (Resolution)",
+        "sight_angle": "Beam Inclination (α)",
+        "angular_adj": "Angular Adjustment Resolution",
         "direction": "Correction Sense",
         "direction_up": "Ascending (+Z)",
         "direction_down": "Descending (-Z)",
@@ -758,23 +466,21 @@ TEXTS = {
         "uncertainty_lbl": "Expanded Uncertainty (SciPy)",
         "history_title": "Metrological Database Records (SQLite)",
         "clear_history": "Clear Database",
-        "confirm_clear_msg": "Are you sure you want to clear the metrological registry?",
-        "confirm_yes": "✔ Yes, Clear",
-        "confirm_cancel": "✖ Cancel",
-        "empty_history": "No experimental records saved in database yet.",
-        "select_prompt": "⚠️ Please select an Experimental Setup / Optical Bench in the sidebar to start the metrological simulation.",
-        "record_saved": "✅ Metrological measurement recorded permanently into SQLite.",
-        "target_2d_title": "🎯 Transverse 2D Profile (PSD Sensor / Profilometer)"
+        "confirm_clear_msg": "Confirm permanent deletion of the metrological records:",
+        "confirm_yes": "Confirm Deletion",
+        "confirm_cancel": "Cancel Operation",
+        "empty_history": "No experimental records stored in the database.",
+        "select_prompt": "Select an Experimental Research Line in the sidebar to initialize the simulation system.",
+        "record_saved": "Measurement successfully recorded in the SQLite system.",
+        "target_2d_title": "Transverse Energy Distribution Profile (PSD Sensor)"
     }
 }
 
-# --- SELECCIÓN DE IDIOMA ---
-st.sidebar.header("Configuración / Settings")
-lang = st.sidebar.selectbox("Idioma / Language", ["Español", "English"])
+st.sidebar.header("Configuración General")
+lang = st.sidebar.selectbox("Idioma Institucional", ["Español", "English"])
 lang_code = "ES" if lang == "Español" else "EN"
 txt = TEXTS[lang_code]
 
-# --- MENÚ DESPLEGABLE DE CONFIGURACIONES EXPERIMENTALES ---
 st.sidebar.header(txt["profile_select"])
 profiles_options = [txt["profile_placeholder"]] + [
     txt["p1"], txt["p2"], txt["p3"], txt["p4"], txt["p5"], txt["p6"],
@@ -884,20 +590,19 @@ else:
     D_m = D_val * 0.9144
     D_cm, H_mira_cm, H_extra_cm = D_val * 91.44, H_mira * 2.54, H_extra * 2.54
 
-# --- ENCABEZADO PRINCIPAL NEÓN CIAN ---
+# --- ENCABEZADO INSTITUCIONAL ---
 st.markdown(f"""
-    <div style="background: linear-gradient(135deg, #040816 0%, #071530 100%);
-                padding: 14px 25px;
-                border-radius: 12px;
-                border-left: 5px solid #00f0ff;
-                border: 1px solid rgba(0, 240, 255, 0.25);
-                margin-bottom: 20px;
-                box-shadow: 0px 4px 15px rgba(0, 240, 255, 0.1);">
-        <h2 style="color: #ffffff; margin: 0; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; letter-spacing: 1px; text-shadow: 0 0 8px rgba(0,240,255,0.4);">
+    <div style="background: #121513;
+                padding: 16px 25px;
+                border-radius: 8px;
+                border-left: 4px solid #8C9490;
+                border: 1px solid #1F2421;
+                margin-bottom: 20px;">
+        <h2 style="color: #F1F3F2; margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.5px;">
             {txt['title']}
         </h2>
-        <p style="color: #93c5fd; margin: 0; font-size: 13px; opacity: 0.9;">
-            Centro de Investigaciones en Óptica (CIO) | Configuración Activa: <b style="color: #00f0ff;">{profile if profile != txt['profile_placeholder'] else 'Ninguna'}</b>
+        <p style="color: #8C9490; margin: 4px 0 0 0; font-size: 12px;">
+            Centro de Investigaciones en Óptica, A.C. (CIO) — León, Guanajuato | Línea Experimental: <b style="color: #F1F3F2;">{profile if profile != txt['profile_placeholder'] else 'Ninguna'}</b>
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -957,7 +662,6 @@ direccion_str = txt["direction_up"] if is_up else txt["direction_down"]
 pasos_micrometricos = abs(round(arcmin * 4))
 pulsos_actuador = abs(round(mrad * 10))
 
-# --- REGISTRO A BASE DE DATOS EN SQLite ---
 if save_clicked:
     current_record = {
         "Configuración Experimental": profile,
@@ -976,7 +680,7 @@ if save_clicked:
     save_record_to_db(current_record)
     st.sidebar.success(txt["record_saved"])
 
-# --- GRÁFICAS 3D Y 2D OPTIMIZADAS PARA RÁPIDA RENDERIZACIÓN ---
+# --- VISUALIZACIÓN GRÁFICA (PLOTS MONOCROMÁTICOS) ---
 col_3d, col_2d = st.columns([1.75, 1.0])
 
 with col_3d:
@@ -985,14 +689,14 @@ with col_3d:
 
     fig3d = go.Figure()
 
-    grid_x = np.linspace(0, max(D_cm, 10), 8)
-    grid_y = np.linspace(-max(abs(H_extra_cm)*1.5, 20), max(abs(H_extra_cm)*1.5, 20), 8)
+    grid_x = np.linspace(0, max(D_cm, 10), 10)
+    grid_y = np.linspace(-max(abs(H_extra_cm)*1.5, 20), max(abs(H_extra_cm)*1.5, 20), 10)
     gx, gy = np.meshgrid(grid_x, grid_y)
     gz = np.zeros_like(gx)
 
     fig3d.add_trace(go.Surface(
         x=gx, y=gy, z=gz,
-        colorscale=[[0, '#02040a'], [1, '#071530']],
+        colorscale=[[0, '#0A0C0B'], [1, '#1F2421']],
         showscale=False, opacity=0.5, hoverinfo='none'
     ))
 
@@ -1000,122 +704,122 @@ with col_3d:
         x=[0, D_cm], y=[0, 0], z=[0, y_ref_end],
         mode='lines+markers',
         name=f"{txt['laser_label']} ({ref_angle_deg:.2f}°)",
-        line=dict(color='#38bdf8', width=6, dash='dash'),
-        marker=dict(size=3, color='#38bdf8')
+        line=dict(color='#8C9490', width=5, dash='dash'),
+        marker=dict(size=3, color='#8C9490')
     ))
 
     fig3d.add_trace(go.Scatter3d(
         x=[0, D_cm], y=[0, 0], z=[pos_mira[1], pos_impacto_mira[1]],
         mode='lines+markers',
         name=f"{txt['sight_label']} (α = {angulo_deg:.2f}°)",
-        line=dict(color='#00f0ff', width=8),
-        marker=dict(size=4, color='#00f0ff')
+        line=dict(color='#F1F3F2', width=7),
+        marker=dict(size=4, color='#F1F3F2')
     ))
 
     fig3d.add_trace(go.Scatter3d(
         x=[D_cm], y=[0], z=[y_ref_end],
         mode='markers', name=txt["target_center"],
-        marker=dict(size=7, color='#38ef7d', symbol='circle')
+        marker=dict(size=6, color='#555A57', symbol='circle')
     ))
 
     fig3d.add_trace(go.Scatter3d(
         x=[D_cm], y=[0], z=[y_target_point],
         mode='markers', name=txt["target_point"],
-        marker=dict(size=9, color='#00f0ff', symbol='diamond')
+        marker=dict(size=8, color='#FFFFFF', symbol='diamond')
     ))
 
     fig3d.update_layout(
         title=dict(
-            text=f"📐 <b>{txt['title_graph']} 3D</b>: {D_val:.1f} {d_unit} | <b>α</b>: {angulo_deg:.4f}°",
-            font=dict(color="#00f0ff", size=14)
+            text=f"<b>{txt['title_graph']}</b> | Distancia: {D_val:.1f} {d_unit} | α: {angulo_deg:.4f}°",
+            font=dict(color="#F1F3F2", size=13)
         ),
-        paper_bgcolor='#030712', plot_bgcolor='#030712',
+        paper_bgcolor='#121513', plot_bgcolor='#121513',
         height=450, margin=dict(l=5, r=5, t=35, b=5),
         scene=dict(
             aspectmode='manual', aspectratio=dict(x=2.0, y=1, z=1.1),
-            xaxis=dict(title='Distancia (cm)', backgroundcolor="#030712", gridcolor="#0f2147", tickfont=dict(color="#93c5fd")),
-            yaxis=dict(title='Eje Transversal', backgroundcolor="#030712", gridcolor="#0f2147", tickfont=dict(color="#93c5fd")),
-            zaxis=dict(title='Elevación (cm)', backgroundcolor="#030712", gridcolor="#0f2147", tickfont=dict(color="#93c5fd")),
+            xaxis=dict(title='Distancia (cm)', backgroundcolor="#121513", gridcolor="#1F2421", tickfont=dict(color="#8C9490")),
+            yaxis=dict(title='Eje Transversal', backgroundcolor="#121513", gridcolor="#1F2421", tickfont=dict(color="#8C9490")),
+            zaxis=dict(title='Elevación (cm)', backgroundcolor="#121513", gridcolor="#1F2421", tickfont=dict(color="#8C9490")),
             camera=dict(eye=dict(x=1.6, y=-1.4, z=0.6))
         ),
-        legend=dict(orientation="h", y=-0.05, x=0.5, xanchor="center", font=dict(color="white", size=10), bgcolor="rgba(4, 8, 22, 0.9)")
+        legend=dict(orientation="h", y=-0.05, x=0.5, xanchor="center", font=dict(color="#F1F3F2", size=10), bgcolor="rgba(18, 21, 19, 0.9)")
     )
-    st.plotly_chart(fig3d, use_container_width=True, key="grafica_optica_3d", config={"displayModeBar": False})
+    st.plotly_chart(fig3d, use_container_width=True, key="grafica_optica_3d")
 
 with col_2d:
     fig2d = go.Figure()
 
     max_radius = max(abs(diferencia_altura_cm) * 1.4, spot_radius_cm * 2.5, 5.0)
-    rings = np.linspace(max_radius * 0.2, max_radius, 3)
+    rings = np.linspace(max_radius * 0.2, max_radius, 4)
 
     for r in reversed(rings):
         fig2d.add_shape(
             type="circle", xref="x", yref="y",
             x0=-r, y0=-r, x1=r, y1=r,
-            line=dict(color="#0e294b", width=1.2),
-            fillcolor="rgba(14, 41, 75, 0.15)"
+            line=dict(color="#1F2421", width=1),
+            fillcolor="rgba(31, 36, 33, 0.15)"
         )
 
-    fig2d.add_shape(type="line", x0=-max_radius*1.2, y0=0, x1=max_radius*1.2, y1=0, line=dict(color="#1e3a8a", width=1, dash="dot"))
-    fig2d.add_shape(type="line", x0=0, y0=-max_radius*1.2, x1=0, y1=max_radius*1.2, line=dict(color="#1e3a8a", width=1, dash="dot"))
+    fig2d.add_shape(type="line", x0=-max_radius*1.2, y0=0, x1=max_radius*1.2, y1=0, line=dict(color="#2D3330", width=1, dash="dot"))
+    fig2d.add_shape(type="line", x0=0, y0=-max_radius*1.2, x1=0, y1=max_radius*1.2, line=dict(color="#2D3330", width=1, dash="dot"))
 
     fig2d.add_shape(
         type="circle", xref="x", yref="y",
         x0=-spot_radius_cm, y0=diferencia_altura_cm - spot_radius_cm,
         x1=spot_radius_cm, y1=diferencia_altura_cm + spot_radius_cm,
-        line=dict(color="#00f0ff", width=2),
-        fillcolor="rgba(0, 240, 255, 0.25)"
+        line=dict(color="#F1F3F2", width=1.5),
+        fillcolor="rgba(241, 243, 242, 0.2)"
     )
 
     fig2d.add_trace(go.Scatter(
         x=[0], y=[diferencia_altura_cm],
         mode='markers', name=txt["target_point"],
-        marker=dict(size=8, color='#00f0ff', symbol='cross')
+        marker=dict(size=7, color='#FFFFFF', symbol='cross')
     ))
 
     fig2d.add_trace(go.Scatter(
         x=[0], y=[0],
         mode='markers', name=txt["target_center"],
-        marker=dict(size=7, color='#38ef7d', symbol='circle')
+        marker=dict(size=6, color='#8C9490', symbol='circle')
     ))
 
     fig2d.update_layout(
-        title=dict(text=txt["target_2d_title"], font=dict(color="#00f0ff", size=14)),
-        paper_bgcolor='#030712', plot_bgcolor='#030712',
+        title=dict(text=txt["target_2d_title"], font=dict(color="#F1F3F2", size=13)),
+        paper_bgcolor='#121513', plot_bgcolor='#121513',
         height=450, margin=dict(l=10, r=10, t=35, b=10),
-        xaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#93c5fd"), title=f"X ({h_unit})"),
-        yaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#93c5fd"), title=f"Y ({h_unit})", scaleanchor="x", scaleratio=1),
-        legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center", font=dict(color="white", size=9), bgcolor="rgba(4, 8, 22, 0.9)")
+        xaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#8C9490"), title=f"X ({h_unit})"),
+        yaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#8C9490"), title=f"Y ({h_unit})", scaleanchor="x", scaleratio=1),
+        legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center", font=dict(color="#F1F3F2", size=9), bgcolor="rgba(18, 21, 19, 0.9)")
     )
-    st.plotly_chart(fig2d, use_container_width=True, key="grafica_diana_2d", config={"displayModeBar": False})
+    st.plotly_chart(fig2d, use_container_width=True, key="grafica_diana_2d")
 
-# --- MÉTRICAS Y RESULTADOS (ESTILO MONOCROMÁTICO NEÓN) ---
+# --- MÉTRICAS DE RESULTADO INSTITUCIONALES ---
 st.markdown(f"""
     <div class="metric-card-container">
         <div style="text-align: center; flex: 1;">
-            <span style="color: #93c5fd; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['diff_height']}</span><br>
-            <span style="color: #ffffff; font-size: 17px; font-weight: bold;">{diff_height_display:.2f} {h_unit}</span>
+            <span style="color: #8C9490; font-size: 11px; font-weight: 500; text-transform: uppercase;">{txt['diff_height']}</span><br>
+            <span style="color: #F1F3F2; font-size: 16px; font-weight: 600;">{diff_height_display:.2f} {h_unit}</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(0, 240, 255, 0.2); padding-left: 10px; flex: 1;">
-            <span style="color: #93c5fd; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['sight_angle']}</span><br>
-            <span style="color: #ffffff; font-size: 17px; font-weight: bold;">{angulo_deg:.4f}°</span>
+        <div style="text-align: center; border-left: 1px solid #1F2421; padding-left: 10px; flex: 1;">
+            <span style="color: #8C9490; font-size: 11px; font-weight: 500; text-transform: uppercase;">{txt['sight_angle']}</span><br>
+            <span style="color: #F1F3F2; font-size: 16px; font-weight: 600;">{angulo_deg:.4f}°</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(0, 240, 255, 0.2); padding-left: 10px; flex: 1.2;">
-            <span style="color: #93c5fd; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['angular_adj']}</span><br>
-            <span style="color: #00f0ff; font-size: 17px; font-weight: bold; text-shadow: 0 0 6px rgba(0,240,255,0.5);">{arcmin:.2f} arcmin | {mrad:.2f} mrad</span>
+        <div style="text-align: center; border-left: 1px solid #1F2421; padding-left: 10px; flex: 1.2;">
+            <span style="color: #8C9490; font-size: 11px; font-weight: 500; text-transform: uppercase;">{txt['angular_adj']}</span><br>
+            <span style="color: #F1F3F2; font-size: 16px; font-weight: 600;">{arcmin:.2f} arcmin | {mrad:.2f} mrad</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(0, 240, 255, 0.2); padding-left: 10px; flex: 1.2;">
-            <span style="color: #93c5fd; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['spot_size_lbl']}</span><br>
-            <span style="color: #ffffff; font-size: 17px; font-weight: bold;">Ø {spot_size_display:.2f} {h_unit}</span>
+        <div style="text-align: center; border-left: 1px solid #1F2421; padding-left: 10px; flex: 1.2;">
+            <span style="color: #8C9490; font-size: 11px; font-weight: 500; text-transform: uppercase;">{txt['spot_size_lbl']}</span><br>
+            <span style="color: #F1F3F2; font-size: 16px; font-weight: 600;">Ø {spot_size_display:.2f} {h_unit}</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(0, 240, 255, 0.2); padding-left: 10px; flex: 1.2;">
-            <span style="color: #93c5fd; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['uncertainty_lbl']}</span><br>
-            <span style="color: #38ef7d; font-size: 15px; font-weight: bold; text-shadow: 0 0 6px rgba(56,239,125,0.4);">{uncertainty_str}</span>
+        <div style="text-align: center; border-left: 1px solid #1F2421; padding-left: 10px; flex: 1.2;">
+            <span style="color: #8C9490; font-size: 11px; font-weight: 500; text-transform: uppercase;">{txt['uncertainty_lbl']}</span><br>
+            <span style="color: #F1F3F2; font-size: 15px; font-weight: 600;">{uncertainty_str}</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-# --- TABLA DE HISTORIAL BASE DE DATOS SQLITE & EXPORTACIÓN CSV ---
+# --- HISTORIAL Y EXPORTACIÓN ---
 st.markdown("---")
 df_db = load_history_from_db()
 
@@ -1145,19 +849,15 @@ with col_hist_btn:
         col_yes, col_no = st.columns(2)
 
         with col_yes:
-            st.markdown('<div class="btn-confirm-yes">', unsafe_allow_html=True)
             if st.button(txt["confirm_yes"], use_container_width=True):
                 clear_db()
                 st.session_state["confirm_clear"] = False
                 st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
 
         with col_no:
-            st.markdown('<div class="btn-confirm-cancel">', unsafe_allow_html=True)
             if st.button(txt["confirm_cancel"], use_container_width=True):
                 st.session_state["confirm_clear"] = False
                 st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
 
 if not df_db.empty:
     st.dataframe(
