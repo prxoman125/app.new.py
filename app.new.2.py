@@ -15,7 +15,7 @@ st.set_page_config(
 )
 
 # =========================================================================
-# 🔒 MÓDULO DE AUTENTICACIÓN INSTITUCIONAL (MONOCROMÁTICO / CIO LEÓN GTO)
+# 🔒 MÓDULO DE AUTENTICACIÓN INSTITUCIONAL (NEÓN AVANZADO / CIO LEÓN GTO)
 # =========================================================================
 
 USUARIOS_PERMITIDOS = [
@@ -43,20 +43,20 @@ if not st.session_state.autenticado:
                 height: 0px;
             }
             .stApp {
-                background-color: #0A0C0B !important;
+                background-color: #030504 !important;
                 overflow-x: hidden;
             }
 
-            /* Fondo Monocromático Dinámico con Partículas / Gradiente Avanzado */
+            /* Fondo Cyber-Neón Dinámico con Malla Láser */
             .grid-bg {
                 position: fixed;
                 top: 0; left: 0; width: 100vw; height: 100vh;
                 background: 
-                    radial-gradient(circle at 50% 50%, rgba(31, 36, 33, 0.4) 0%, rgba(10, 12, 11, 0.95) 100%),
-                    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-                background-size: 100% 100%, 40px 40px, 40px 40px;
-                animation: backgroundShift 30s ease infinite alternate;
+                    radial-gradient(circle at 50% 50%, rgba(0, 255, 128, 0.08) 0%, rgba(3, 5, 4, 0.98) 100%),
+                    linear-gradient(rgba(0, 255, 128, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 255, 128, 0.03) 1px, transparent 1px);
+                background-size: 100% 100%, 30px 30px, 30px 30px;
+                animation: backgroundShift 25s ease infinite alternate;
                 z-index: 0;
                 pointer-events: none;
             }
@@ -68,66 +68,68 @@ if not st.session_state.autenticado:
                 justify-content: space-between;
                 font-family: monospace;
                 font-size: 11px;
-                color: #A3B19B;
-                letter-spacing: 1.5px;
+                color: #00FF80;
+                letter-spacing: 2px;
                 z-index: 10;
-                opacity: 0.9;
+                opacity: 0.95;
                 pointer-events: none;
                 text-transform: uppercase;
+                text-shadow: 0 0 10px rgba(0, 255, 128, 0.6);
             }
 
             .hud-panel-left, .hud-panel-right {
                 position: fixed;
                 top: 18vh;
-                width: 220px;
-                padding: 16px;
-                background: rgba(15, 18, 16, 0.85);
-                border: 1px solid rgba(163, 177, 155, 0.2);
-                backdrop-filter: blur(12px);
-                border-radius: 4px;
+                width: 230px;
+                padding: 18px;
+                background: rgba(5, 12, 8, 0.9);
+                border: 1px solid rgba(0, 255, 128, 0.3);
+                backdrop-filter: blur(15px);
+                border-radius: 6px;
                 font-family: monospace;
                 font-size: 10px;
-                color: #D3D9D2;
+                color: #A3FFD0;
                 z-index: 1;
                 pointer-events: none;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 0 25px rgba(0, 255, 128, 0.15), inset 0 0 15px rgba(0, 255, 128, 0.05);
             }
 
             .hud-panel-left { left: 4vw; }
             .hud-panel-right { right: 4vw; }
 
             .panel-header {
-                color: #FFFFFF;
+                color: #00FF80;
                 font-weight: bold;
-                border-bottom: 1px solid rgba(163, 177, 155, 0.3);
-                padding-bottom: 4px;
+                border-bottom: 1px solid rgba(0, 255, 128, 0.4);
+                padding-bottom: 6px;
                 margin-bottom: 10px;
-                letter-spacing: 1px;
+                letter-spacing: 1.5px;
+                text-shadow: 0 0 8px rgba(0, 255, 128, 0.8);
             }
 
             .hud-data-row {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 6px;
+                margin-bottom: 8px;
             }
 
             .login-wrapper {
                 position: relative;
-                max-width: 460px;
-                margin: 6vh auto 0 auto;
-                padding: 1px;
-                border-radius: 6px;
-                background: linear-gradient(135deg, #588157, #3A5A40, #1F2421);
+                max-width: 480px;
+                margin: 5vh auto 0 auto;
+                padding: 2px;
+                border-radius: 8px;
+                background: linear-gradient(135deg, #00FF80, #00B4D8, #030504);
                 background-size: 200% 200%;
-                animation: borderGlow 8s ease infinite;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+                animation: borderGlow 6s ease infinite;
+                box-shadow: 0 0 40px rgba(0, 255, 128, 0.3), 0 0 80px rgba(0, 180, 216, 0.15);
             }
 
             .login-card {
                 position: relative;
-                background: #0F1210;
-                border-radius: 5px;
-                padding: 30px;
+                background: #060A08;
+                border-radius: 7px;
+                padding: 35px;
                 z-index: 2;
             }
 
@@ -137,48 +139,52 @@ if not st.session_state.autenticado:
                 align-items: center;
                 font-family: monospace;
                 font-size: 10px;
-                color: #8F9D8A;
-                letter-spacing: 1px;
+                color: #00FF80;
+                letter-spacing: 1.5px;
                 margin-bottom: 15px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                border-bottom: 1px solid rgba(0, 255, 128, 0.2);
                 padding-bottom: 8px;
+                text-shadow: 0 0 6px rgba(0, 255, 128, 0.5);
             }
 
             .loading-bar-container {
                 width: 100%;
-                height: 2px;
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 1px;
+                height: 3px;
+                background: rgba(0, 255, 128, 0.1);
+                border-radius: 2px;
                 overflow: hidden;
-                margin-bottom: 20px;
+                margin-bottom: 25px;
             }
 
             .loading-bar-fill {
-                width: 50%;
+                width: 40%;
                 height: 100%;
-                background: linear-gradient(90deg, transparent, #FFFFFF, transparent);
+                background: linear-gradient(90deg, transparent, #00FF80, #00B4D8, transparent);
+                box-shadow: 0 0 10px #00FF80;
                 animation: loadingSweep 2s ease-in-out infinite;
             }
 
             .login-title {
                 color: #FFFFFF;
-                font-size: 16px;
-                font-weight: 600;
+                font-size: 18px;
+                font-weight: 700;
                 text-align: center;
-                letter-spacing: 1.5px;
+                letter-spacing: 2px;
                 text-transform: uppercase;
                 margin: 0;
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
             }
             .login-subtitle {
-                color: #8F9D8A;
+                color: #00FF80;
                 font-size: 10px;
                 text-align: center;
-                letter-spacing: 1px;
-                opacity: 0.8;
-                margin-top: 6px;
-                margin-bottom: 20px;
+                letter-spacing: 1.5px;
+                opacity: 0.9;
+                margin-top: 8px;
+                margin-bottom: 25px;
                 font-family: monospace;
                 text-transform: uppercase;
+                text-shadow: 0 0 8px rgba(0, 255, 128, 0.5);
             }
 
             @keyframes backgroundShift {
@@ -194,7 +200,7 @@ if not st.session_state.autenticado:
 
             @keyframes loadingSweep {
                 0% { transform: translateX(-100%); }
-                100% { transform: translateX(250%); }
+                100% { transform: translateX(300%); }
             }
 
             @media (max-width: 1024px) {
@@ -206,36 +212,36 @@ if not st.session_state.autenticado:
 
         <div class="top-global-hud">
             <span>INSTITUCIÓN: CIO LEÓN GTO</span>
-            <span>MÓDULO: SEGURIDAD ÓPTICA</span>
-            <span>ESTADO: SEGURO</span>
+            <span>MÓDULO: HOLOGRAFÍA & COLIMACIÓN</span>
+            <span>ESTADO: SEGURO (NIVEL 4)</span>
         </div>
 
         <div class="hud-panel-left">
-            <div class="panel-header">DIAGNOSTICO_SISTEMA</div>
-            <div class="hud-data-row"><span>NODO:</span><span style="color:#FFFFFF">CIO-OPT-01</span></div>
-            <div class="hud-data-row"><span>INTERFAZ:</span><span style="color:#A3B19B">ESTABLE</span></div>
-            <div class="hud-data-row"><span>LÁSER COHERENTE:</span><span style="color:#FFFFFF">ACTIVO</span></div>
-            <div class="hud-data-row"><span>SEGURIDAD:</span><span style="color:#A3B19B">NIVEL 4</span></div>
+            <div class="panel-header">DIAGNOSTICO_CUÁNTICO</div>
+            <div class="hud-data-row"><span>NODO:</span><span style="color:#00FF80">CIO-OPT-01</span></div>
+            <div class="hud-data-row"><span>INTERFAZ:</span><span style="color:#00B4D8">ESTABLE</span></div>
+            <div class="hud-data-row"><span>LÁSER COHERENTE:</span><span style="color:#00FF80">ACTIVO</span></div>
+            <div class="hud-data-row"><span>ANCHO BANDA:</span><span style="color:#00B4D8">10 Gbps</span></div>
         </div>
 
         <div class="hud-panel-right">
             <div class="panel-header">TELEMETRIA_LOCAL</div>
-            <div class="hud-data-row"><span>SERVIDOR:</span><span style="color:#FFFFFF">LEÓN, GTO</span></div>
-            <div class="hud-data-row"><span>LATENCIA:</span><span style="color:#FFFFFF">4 ms</span></div>
-            <div class="hud-data-row"><span>ENCRIPCIÓN:</span><span style="color:#FFFFFF">SHA-256</span></div>
-            <div class="hud-data-row"><span>ESTADO SSL:</span><span style="color:#A3B19B">VERIFICADO</span></div>
+            <div class="hud-data-row"><span>SERVIDOR:</span><span style="color:#00FF80">LEÓN, GTO</span></div>
+            <div class="hud-data-row"><span>LATENCIA:</span><span style="color:#00FF80">2 ms</span></div>
+            <div class="hud-data-row"><span>ENCRIPCIÓN:</span><span style="color:#00B4D8">AES-256-NEON</span></div>
+            <div class="hud-data-row"><span>ESTADO SSL:</span><span style="color:#00FF80">VERIFICADO</span></div>
         </div>
     """, unsafe_allow_html=True)
     
-    col_left, col_center, col_right = st.columns([1, 1.3, 1])
+    col_left, col_center, col_right = st.columns([1, 1.4, 1])
     
     with col_center:
         st.markdown("""
             <div class="login-wrapper">
                 <div class="login-card">
                     <div class="status-bar-top">
-                        <span>ACCESO RESTRINGIDO</span>
-                        <span>AUTORIZACIÓN REQUERIDA</span>
+                        <span>ACCESO RESTRINGIDO - CIO</span>
+                        <span>AUTORIZACIÓN BIOMÉTRICA / TOKEN</span>
                     </div>
                     <div class="loading-bar-container">
                         <div class="loading-bar-fill"></div>
@@ -249,7 +255,7 @@ if not st.session_state.autenticado:
         with st.form("formulario_login"):
             correo = st.text_input("Correo electrónico institucional:", placeholder="usuario@cio.mx")
             password = st.text_input("Contraseña de acceso:", type="password", placeholder="••••••••") 
-            boton_ingresar = st.form_submit_button("Autenticar Credenciales", use_container_width=True)
+            boton_ingresar = st.form_submit_button("AUTENTICAR CREDENCIALES", use_container_width=True)
             
             if boton_ingresar:
                 correo_ingresado = correo.strip().lower()
@@ -259,7 +265,7 @@ if not st.session_state.autenticado:
                     st.session_state.autenticado = True
                     st.session_state.intentos = 0
                     
-                    with st.spinner("Estableciendo enlace seguro con servidores del CIO..."):
+                    with st.spinner("Estableciendo enlace de alta fidelidad con servidores del CIO León..."):
                         time.sleep(1.0)
                     st.rerun()
                 else:
@@ -272,7 +278,7 @@ if not st.session_state.autenticado:
     st.stop()
 
 # =========================================================================
-# 👇 APLICACIÓN PRINCIPAL (MONOCROMÁTICA / CIO LEÓN GTO)
+# 👇 APLICACIÓN PRINCIPAL (NEÓN MODERNO / CIO LEÓN GTO)
 # =========================================================================
 
 DB_NAME = "colimacion_historial.db"
@@ -295,7 +301,9 @@ def init_db():
             direccion TEXT,
             clics_moa INTEGER,
             pulsos_mrad INTEGER,
-            incertidumbre TEXT
+            incertidumbre TEXT,
+            param_extra_1 TEXT,
+            param_extra_2 TEXT
         )
     ''')
     conn.commit()
@@ -306,20 +314,20 @@ def save_record_to_db(rec):
     c = conn.cursor()
     c.execute('''
         INSERT INTO historial 
-        (perfil, distancia, h_mira, h_extra, spot_size, angulo, moa, mrad, direccion, clics_moa, pulsos_mrad, incertidumbre)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (perfil, distancia, h_mira, h_extra, spot_size, angulo, moa, mrad, direccion, clics_moa, pulsos_mrad, incertidumbre, param_extra_1, param_extra_2)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         rec["Línea de Investigación"], rec["Distancia Operativa"], rec["Eje de Colimación"], 
         rec["Desviación del Haz"], rec["Diámetro del Spot"], rec["Ángulo (α)"], 
         rec["MOA"], rec["mrad"], rec["Dirección de Corrección"], rec["Ajuste Clics (1/4 MOA)"], 
-        rec["Ajuste Pulsos (0.1 mrad)"], rec["Incertidumbre Metrológica"]
+        rec["Ajuste Pulsos (0.1 mrad)"], rec["Incertidumbre Metrológica"], rec["ParamExtra1"], rec["ParamExtra2"]
     ))
     conn.commit()
     conn.close()
 
 def load_history_from_db():
     conn = sqlite3.connect(DB_NAME)
-    df = pd.read_sql_query("SELECT id, fecha AS 'Fecha/Hora', perfil AS 'Línea de Investigación', distancia AS 'Distancia Operativa', h_mira AS 'Eje de Colimación', h_extra AS 'Desviación del Haz', spot_size AS 'Diámetro del Spot', angulo AS 'Ángulo (α)', moa AS 'MOA', mrad AS 'mrad', direccion AS 'Dirección de Corrección', clics_moa AS 'Ajuste Clics (1/4 MOA)', pulsos_mrad AS 'Ajuste Pulsos (0.1 mrad)', incertidumbre AS 'Incertidumbre Metrológica' FROM historial ORDER BY id DESC", conn)
+    df = pd.read_sql_query("SELECT id, fecha AS 'Fecha/Hora', perfil AS 'Línea de Investigación', distancia AS 'Distancia Operativa', h_mira AS 'Eje de Colimación', h_extra AS 'Desviación del Haz', spot_size AS 'Diámetro del Spot', angulo AS 'Ángulo (α)', moa AS 'MOA', mrad AS 'mrad', direccion AS 'Dirección de Corrección', clics_moa AS 'Ajuste Clics (1/4 MOA)', pulsos_mrad AS 'Ajuste Pulsos (0.1 mrad)', incertidumbre AS 'Incertidumbre Metrológica', param_extra_1 AS 'Parámetro Específico A', param_extra_2 AS 'Parámetro Específico B' FROM historial ORDER BY id DESC", conn)
     conn.close()
     return df
 
@@ -332,7 +340,7 @@ def clear_db():
 
 init_db()
 
-# --- ESTILOS CSS PERSONALIZADOS (MONOCROMÁTICO / ELEGANTE / SOBRIO) ---
+# --- ESTILOS CSS PERSONALIZADOS (NEÓN PROFESIONAL / CIO LEÓN GTO) ---
 st.markdown("""
     <style>
         header, [data-testid="stHeader"], [data-testid="stToolbar"] {
@@ -352,14 +360,15 @@ st.markdown("""
         }
 
         .stApp {
-            background-color: #0A0C0B !important;
+            background-color: #030504 !important;
             color: #E2E8E4 !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         [data-testid="stSidebar"] {
-            background-color: #0F1210 !important;
-            border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+            background-color: #060A08 !important;
+            border-right: 1px solid rgba(0, 255, 128, 0.2) !important;
+            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.8);
         }
 
         [data-testid="stSidebar"] > div:first-child {
@@ -367,31 +376,35 @@ st.markdown("""
         }
 
         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
-            color: #FFFFFF !important;
+            color: #00FF80 !important;
             font-size: 12px !important;
             font-weight: 700 !important;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-top: 15px !important;
+            letter-spacing: 1.5px;
+            margin-top: 18px !important;
             margin-bottom: 10px !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(0, 255, 128, 0.3) !important;
+            padding-bottom: 6px;
+            text-shadow: 0 0 8px rgba(0, 255, 128, 0.5);
         }
 
         div.stButton > button {
-            background: #161A18 !important;
-            color: #FFFFFF !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            border-radius: 4px !important;
-            font-weight: 500 !important;
+            background: linear-gradient(135deg, #061A10, #0A2618) !important;
+            color: #00FF80 !important;
+            border: 1px solid rgba(0, 255, 128, 0.4) !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
             font-size: 12px !important;
-            letter-spacing: 0.5px;
-            transition: all 0.25s ease !important;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 255, 128, 0.15);
+            transition: all 0.3s ease !important;
         }
         div.stButton > button:hover {
-            background: #252D28 !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, #0A2618, #0E3B24) !important;
+            color: #FFFFFF !important;
+            border-color: #00FF80 !important;
+            box-shadow: 0 0 20px rgba(0, 255, 128, 0.5), inset 0 0 10px rgba(0, 255, 128, 0.2);
         }
 
         button[aria-label="Increase value"], 
@@ -399,34 +412,39 @@ st.markdown("""
         div[data-baseweb="spinbutton"] button,
         [data-testid="stNumberInputStepDown"],
         [data-testid="stNumberInputStepUp"] {
-            color: #FFFFFF !important;
-            background-color: #161A18 !important;
-            border-color: rgba(255, 255, 255, 0.15) !important;
+            color: #00FF80 !important;
+            background-color: #060A08 !important;
+            border-color: rgba(0, 255, 128, 0.3) !important;
         }
 
         div[data-baseweb="input"], div[data-baseweb="select"] > div {
-            background-color: #161A18 !important;
-            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            background-color: #060A08 !important;
+            border: 1px solid rgba(0, 255, 128, 0.25) !important;
             color: #FFFFFF !important;
-            border-radius: 4px !important;
+            border-radius: 6px !important;
+            box-shadow: inset 0 0 8px rgba(0, 255, 128, 0.05);
+        }
+        div[data-baseweb="input"]:focus-within, div[data-baseweb="select"] > div:focus-within {
+            border-color: #00FF80 !important;
+            box-shadow: 0 0 12px rgba(0, 255, 128, 0.4), inset 0 0 8px rgba(0, 255, 128, 0.15);
         }
 
         .metric-card-container {
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            background: #111513;
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            padding: 18px 22px; 
-            border-radius: 6px; 
+            background: linear-gradient(135deg, #050E09, #08140E);
+            border: 1px solid rgba(0, 255, 128, 0.35); 
+            padding: 20px 25px; 
+            border-radius: 8px; 
             margin-top: 15px; 
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 25px rgba(0, 255, 128, 0.15), inset 0 0 15px rgba(0, 255, 128, 0.05);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 """, unsafe_allow_html=True)
@@ -467,6 +485,7 @@ TEXTS = {
         "p25": "Caracterización Termo-Óptica de Polímeros Avanzados",
 
         "params": "Parámetros Geométricos del Banco Óptico",
+        "spec_params": "Parámetros Específicos de la Línea",
         "phys_params": "Parámetros Físicos y Ambientales",
         "reset_btn": "Restablecer Parámetros",
         "save_btn": "Registrar Medición en Base de Datos",
@@ -487,7 +506,7 @@ TEXTS = {
         "sight_label": "Eje Ajustado",
         "target_center": "Centro Óptico Teórico",
         "target_point": "Impacto Experimental",
-        "title_graph": "Perfil de Propagación Espacial",
+        "title_graph": "Perfil de Propagación Espacial Cuántico-Óptico",
         "req_angle": "Ángulo de Corrección Requerido (α)",
         "diff_height": "Diferencia de Elevación",
         "sight_angle": "Ángulo de Inclinación Óptica (α)",
@@ -505,8 +524,8 @@ TEXTS = {
         "confirm_cancel": "Cancelar Operación",
         "empty_history": "No se encuentran registros almacenados en la base de datos institucional.",
         "select_prompt": "Seleccione una Línea de Investigación e Ingeniería Aplicada en el panel lateral para iniciar la simulación analítica.",
-        "record_saved": "Medición registrada permanentemente en el sistema.",
-        "target_2d_title": "Distribución Transversal del Haz (Retícula de Posicionamiento)"
+        "record_saved": "Medición registrada permanentemente en el sistema con trazabilidad metrológica.",
+        "target_2d_title": "Distribución Transversal del Haz & Dinámica de Campo"
     },
     "EN": {
         "title": "Institutional System for Optical Collimation and Laser Metrology",
@@ -543,6 +562,7 @@ TEXTS = {
         "p25": "Thermo-Optical Characterization of Advanced Polymers",
 
         "params": "Optical Bench Geometric Parameters",
+        "spec_params": "Line-Specific Parameters",
         "phys_params": "Physical and Environmental Parameters",
         "reset_btn": "Reset Parameters",
         "save_btn": "Record Measurement in Database",
@@ -563,7 +583,7 @@ TEXTS = {
         "sight_label": "Aligned Axis",
         "target_center": "Theoretical Optical Center",
         "target_point": "Experimental Impact",
-        "title_graph": "Spatial Propagation Profile",
+        "title_graph": "Spatial Quantum-Optical Propagation Profile",
         "req_angle": "Required Correction Angle (α)",
         "diff_height": "Elevation Difference",
         "sight_angle": "Optical Inclination Angle (α)",
@@ -581,8 +601,8 @@ TEXTS = {
         "confirm_cancel": "Cancel Operation",
         "empty_history": "No records stored in the institutional database.",
         "select_prompt": "Select a Research Line & Applied Engineering in the sidebar to start analytical simulation.",
-        "record_saved": "Measurement permanently recorded in the system.",
-        "target_2d_title": "Transverse Beam Distribution (Positioning Reticle)"
+        "record_saved": "Measurement permanently recorded in the system with metrological traceability.",
+        "target_2d_title": "Transverse Beam Distribution & Field Dynamics"
     }
 }
 
@@ -665,12 +685,18 @@ if "press_val" not in st.session_state: st.session_state["press_val"] = 1013.25
 if "earth_curv_val" not in st.session_state: st.session_state["earth_curv_val"] = False
 if "confirm_clear" not in st.session_state: st.session_state["confirm_clear"] = False
 
+# Variables para parámetros extras por carrera/línea
+if "spec_param_1" not in st.session_state: st.session_state["spec_param_1"] = 50.0
+if "spec_param_2" not in st.session_state: st.session_state["spec_param_2"] = 1.0
+
 def reset_inputs_to_zero():
     st.session_state["h_mira_val"] = 0.0
     st.session_state["h_extra_val"] = 0.0
     st.session_state["dist_val"] = 0.0
     st.session_state["ref_angle_val"] = 0.0
     st.session_state["laser_div_val"] = 1.0
+    st.session_state["spec_param_1"] = 50.0
+    st.session_state["spec_param_2"] = 1.0
 
 st.sidebar.header(txt["params"])
 
@@ -683,6 +709,30 @@ H_mira = st.sidebar.number_input(f"{txt['h_mira']} ({h_unit})", min_value=-500.0
 H_extra = st.sidebar.number_input(f"{txt['h_extra']} ({h_unit})", min_value=-500.0, max_value=500.0, value=st.session_state["h_extra_val"], step=0.1, key="h_extra_val")
 D_val = st.sidebar.number_input(f"{txt['dist_input']} ({d_unit})", min_value=0.0, max_value=2000.0, value=st.session_state["dist_val"], step=1.0, key="dist_val")
 ref_angle_deg = st.sidebar.number_input(txt['ref_angle_input'], min_value=-30.00, max_value=30.00, value=st.session_state["ref_angle_val"], step=0.10, format="%.2f", key="ref_angle_val")
+
+# --- PARÁMETROS EXTRAS DINÁMICOS SEGÚN LA LÍNEA DE INVESTIGACIÓN ---
+st.sidebar.header(txt["spec_params"])
+spec_label_1, spec_label_2 = "Frecuencia de Modulación (MHz)", "Ganancia Óptica / Coeficiente"
+
+if profile == txt["p1"]: # Interferometría
+    spec_label_1, spec_label_2 = "Longitud de Onda (nm)", "Estabilidad de Fase (rad)"
+    spec_val_1 = st.sidebar.number_input(spec_label_1, min_value=200.0, max_value=1600.0, value=632.8, step=0.1, key="spec_param_1")
+    spec_val_2 = st.sidebar.number_input(spec_label_2, min_value=0.001, max_value=10.0, value=0.05, step=0.001, key="spec_param_2")
+elif profile == txt["p2"]: # Láseres Pulsados
+    spec_label_1, spec_label_2 = "Energía por Pulso (mJ)", "Tasa de Repetición (kHz)"
+    spec_val_1 = st.sidebar.number_input(spec_label_1, min_value=0.1, max_value=5000.0, value=150.0, step=1.0, key="spec_param_1")
+    spec_val_2 = st.sidebar.number_input(spec_label_2, min_value=0.01, max_value=1000.0, value=10.0, step=0.1, key="spec_param_2")
+elif profile in [txt["p3"], txt["p23"]]: # Óptica Difractiva / Realidad Mixta
+    spec_label_1, spec_label_2 = "Eficiencia de Difracción (%)", "Paso de Red (µm)"
+    spec_val_1 = st.sidebar.number_input(spec_label_1, min_value=1.0, max_value=100.0, value=88.5, step=0.5, key="spec_param_1")
+    spec_val_2 = st.sidebar.number_input(spec_label_2, min_value=0.1, max_value=50.0, value=2.2, step=0.1, key="spec_param_2")
+elif profile == txt["p4"]: # Óptica Adaptativa
+    spec_label_1, spec_label_2 = "Actuadores del Espejo (n)", "Ancho de Banda Servocontrol (Hz)"
+    spec_val_1 = st.sidebar.number_input(spec_label_1, min_value=19.0, max_value=349.0, value=127.0, step=2.0, key="spec_param_1")
+    spec_val_2 = st.sidebar.number_input(spec_label_2, min_value=10.0, max_value=5000.0, value=450.0, step=10.0, key="spec_param_2")
+else:
+    spec_val_1 = st.sidebar.number_input(spec_label_1, min_value=0.0, max_value=10000.0, value=st.session_state["spec_param_1"], step=1.0, key="spec_param_1")
+    spec_val_2 = st.sidebar.number_input(spec_label_2, min_value=0.0, max_value=1000.0, value=st.session_state["spec_param_2"], step=0.1, key="spec_param_2")
 
 st.sidebar.header(txt["phys_params"])
 laser_div_mrad = st.sidebar.number_input(txt["laser_div"], min_value=0.01, max_value=10.0, value=st.session_state["laser_div_val"], step=0.1, key="laser_div_val")
@@ -700,20 +750,22 @@ else:
     D_m = D_val * 0.9144
     D_cm, H_mira_cm, H_extra_cm = D_val * 91.44, H_mira * 2.54, H_extra * 2.54
 
-# --- ENCABEZADO INSTITUCIONAL ---
+# --- ENCABEZADO INSTITUCIONAL NEÓN ---
 st.markdown(f"""
-    <div style="background: #111513;
-                padding: 18px 25px;
-                border-radius: 6px;
-                border-left: 4px solid #FFFFFF;
-                border: 1px solid rgba(255, 255, 255, 0.08);
+    <div style="background: linear-gradient(135deg, #050E09, #08140E);
+                padding: 20px 25px;
+                border-radius: 8px;
+                border-left: 4px solid #00FF80;
+                border-top: 1px solid rgba(0, 255, 128, 0.3);
+                border-right: 1px solid rgba(0, 255, 128, 0.3);
+                border-bottom: 1px solid rgba(0, 255, 128, 0.3);
                 margin-bottom: 25px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
-        <h2 style="color: #FFFFFF; margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.5px;">
+                box-shadow: 0 0 25px rgba(0, 255, 128, 0.15);">
+        <h2 style="color: #00FF80; margin: 0; font-size: 20px; font-weight: 700; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0, 255, 128, 0.6);">
             {txt['title']}
         </h2>
-        <p style="color: #94A3B8; margin: 5px 0 0 0; font-size: 12px; font-family: monospace;">
-            CENTRO DE INVESTIGACIONES EN ÓPTICA, A.C. (LEÓN, GTO.) | LÍNEA ACTIVA: <b style="color: #FFFFFF;">{profile if profile != txt['profile_placeholder'] else 'Ninguna seleccionada'}</b>
+        <p style="color: #8FA89B; margin: 6px 0 0 0; font-size: 12px; font-family: monospace;">
+            CENTRO DE INVESTIGACIONES EN ÓPTICA, A.C. (LEÓN, GTO.) | LÍNEA ACTIVA: <b style="color: #00FF80; text-shadow: 0 0 6px rgba(0, 255, 128, 0.5);">{profile if profile != txt['profile_placeholder'] else 'Ninguna seleccionada'}</b>
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -722,7 +774,7 @@ if profile == txt["profile_placeholder"]:
     st.warning(txt["select_prompt"])
     st.stop()
 
-# --- CÁLCULOS METROLÓGICOS (SciPy) ---
+# --- CÁLCULOS METROLÓGICOS (SciPy y Factores de Carrera) ---
 R_earth_m = 6371000.0
 k_refraction = 0.14
 if use_earth_curv and D_m > 0:
@@ -735,7 +787,9 @@ n_air = 1 + (77.6e-6 * press_hpa / (temp_c + 273.15))
 refraction_factor = (n_air - 1.00027) * 10.0
 
 div_rad = laser_div_mrad / 1000.0
-spot_diameter_cm = 0.2 + (2.0 * D_m * math.tan(div_rad / 2.0) * 100.0)
+# Modulación del spot según el parámetro extra 2 de la carrera
+spot_factor = 1.0 + (spec_val_2 * 0.01)
+spot_diameter_cm = (0.2 + (2.0 * D_m * math.tan(div_rad / 2.0) * 100.0)) * spot_factor
 spot_radius_cm = spot_diameter_cm / 2.0
 
 ref_angle_rad = math.radians(ref_angle_deg)
@@ -786,12 +840,14 @@ if save_clicked:
         "Dirección de Corrección": direccion_str,
         "Ajuste Clics (1/4 MOA)": clicks_moa,
         "Ajuste Pulsos (0.1 mrad)": pulsos_mrad,
-        "Incertidumbre Metrológica": uncertainty_str
+        "Incertidumbre Metrológica": uncertainty_str,
+        "ParamExtra1": f"{spec_val_1:.2f}",
+        "ParamExtra2": f"{spec_val_2:.2f}"
     }
     save_record_to_db(current_record)
     st.sidebar.success(txt["record_saved"])
 
-# --- VISUALIZACIONES GRÁFICAS MONOCROMÁTICAS ---
+# --- VISUALIZACIONES GRÁFICAS NEÓN ADAPTADAS A PARÁMETROS DE CARRERA ---
 col_3d, col_2d = st.columns([1.75, 1.0])
 
 with col_3d:
@@ -800,60 +856,63 @@ with col_3d:
 
     fig3d = go.Figure()
 
-    grid_x = np.linspace(0, max(D_cm, 10), 10)
-    grid_y = np.linspace(-max(abs(H_extra_cm)*1.5, 20), max(abs(H_extra_cm)*1.5, 20), 10)
+    grid_x = np.linspace(0, max(D_cm, 10), 12)
+    grid_y = np.linspace(-max(abs(H_extra_cm)*1.5, 20), max(abs(H_extra_cm)*1.5, 20), 12)
     gx, gy = np.meshgrid(grid_x, grid_y)
     gz = np.zeros_like(gx)
 
+    # Superficie con tintes neón oscuros
     fig3d.add_trace(go.Surface(
         x=gx, y=gy, z=gz,
-        colorscale=[[0, '#0A0C0B'], [1, '#1F2421']],
-        showscale=False, opacity=0.5, hoverinfo='none'
+        colorscale=[[0, '#030504'], [1, '#081C12']],
+        showscale=False, opacity=0.6, hoverinfo='none'
     ))
 
+    # Eje láser base con brillo cian/verde
     fig3d.add_trace(go.Scatter3d(
         x=[0, D_cm], y=[0, 0], z=[0, y_ref_end],
         mode='lines+markers',
         name=f"{txt['laser_label']} ({ref_angle_deg:.2f}°)",
-        line=dict(color='#8F9D8A', width=5, dash='dash'),
-        marker=dict(size=3, color='#8F9D8A')
+        line=dict(color='#00B4D8', width=5, dash='dash'),
+        marker=dict(size=3, color='#00B4D8')
     ))
 
+    # Eje ajustado con brillo verde neón intenso
     fig3d.add_trace(go.Scatter3d(
         x=[0, D_cm], y=[0, 0], z=[pos_mira[1], pos_impacto_mira[1]],
         mode='lines+markers',
         name=f"{txt['sight_label']} (α = {angulo_deg:.2f}°)",
-        line=dict(color='#FFFFFF', width=7),
-        marker=dict(size=4, color='#FFFFFF')
+        line=dict(color='#00FF80', width=7),
+        marker=dict(size=4, color='#00FF80')
     ))
 
     fig3d.add_trace(go.Scatter3d(
         x=[D_cm], y=[0], z=[y_ref_end],
         mode='markers', name=txt["target_center"],
-        marker=dict(size=6, color='#A3B19B', symbol='circle')
+        marker=dict(size=6, color='#00B4D8', symbol='circle')
     ))
 
     fig3d.add_trace(go.Scatter3d(
         x=[D_cm], y=[0], z=[y_target_point],
         mode='markers', name=txt["target_point"],
-        marker=dict(size=8, color='#FFFFFF', symbol='diamond')
+        marker=dict(size=8, color='#00FF80', symbol='diamond')
     ))
 
     fig3d.update_layout(
         title=dict(
-            text=f"<b>{txt['title_graph']}</b> | Distancia: {D_val:.1f} {d_unit} | α: {angulo_deg:.4f}°",
-            font=dict(color="#FFFFFF", size=13)
+            text=f"<b>{txt['title_graph']}</b><br><span style='font-size:10px; color:#00FF80;'>Parámetro Específico 1: {spec_val_1:.2f} | Parámetro Específico 2: {spec_val_2:.2f}</span>",
+            font=dict(color="#00FF80", size=13)
         ),
-        paper_bgcolor='#0F1210', plot_bgcolor='#0F1210',
-        height=450, margin=dict(l=5, r=5, t=35, b=5),
+        paper_bgcolor='#060A08', plot_bgcolor='#060A08',
+        height=460, margin=dict(l=5, r=5, t=45, b=5),
         scene=dict(
             aspectmode='manual', aspectratio=dict(x=2.0, y=1, z=1.1),
-            xaxis=dict(title='Distancia (cm)', backgroundcolor="#0F1210", gridcolor="#222B25", tickfont=dict(color="#8F9D8A")),
-            yaxis=dict(title='Eje Transversal', backgroundcolor="#0F1210", gridcolor="#222B25", tickfont=dict(color="#8F9D8A")),
-            zaxis=dict(title='Elevación (cm)', backgroundcolor="#0F1210", gridcolor="#222B25", tickfont=dict(color="#8F9D8A")),
+            xaxis=dict(title='Distancia (cm)', backgroundcolor="#060A08", gridcolor="#0A2618", tickfont=dict(color="#00FF80")),
+            yaxis=dict(title='Eje Transversal', backgroundcolor="#060A08", gridcolor="#0A2618", tickfont=dict(color="#00FF80")),
+            zaxis=dict(title='Elevación (cm)', backgroundcolor="#060A08", gridcolor="#0A2618", tickfont=dict(color="#00FF80")),
             camera=dict(eye=dict(x=1.6, y=-1.4, z=0.6))
         ),
-        legend=dict(orientation="h", y=-0.05, x=0.5, xanchor="center", font=dict(color="#E2E8E4", size=9), bgcolor="rgba(15, 18, 16, 0.9)")
+        legend=dict(orientation="h", y=-0.05, x=0.5, xanchor="center", font=dict(color="#E2E8E4", size=9), bgcolor="rgba(6, 10, 8, 0.95)")
     )
     st.plotly_chart(fig3d, use_container_width=True, key="grafica_optica_3d")
 
@@ -867,65 +926,66 @@ with col_2d:
         fig2d.add_shape(
             type="circle", xref="x", yref="y",
             x0=-r, y0=-r, x1=r, y1=r,
-            line=dict(color="#222B25", width=1),
-            fillcolor="rgba(31, 36, 33, 0.15)"
+            line=dict(color="#0A2618", width=1.5),
+            fillcolor="rgba(0, 255, 128, 0.03)"
         )
 
-    fig2d.add_shape(type="line", x0=-max_radius*1.2, y0=0, x1=max_radius*1.2, y1=0, line=dict(color="#2E3A33", width=1, dash="dot"))
-    fig2d.add_shape(type="line", x0=0, y0=-max_radius*1.2, x1=0, y1=max_radius*1.2, line=dict(color="#2E3A33", width=1, dash="dot"))
+    fig2d.add_shape(type="line", x0=-max_radius*1.2, y0=0, x1=max_radius*1.2, y1=0, line=dict(color="#0E3B24", width=1, dash="dot"))
+    fig2d.add_shape(type="line", x0=0, y0=-max_radius*1.2, x1=0, y1=max_radius*1.2, line=dict(color="#0E3B24", width=1, dash="dot"))
 
+    # Spot beam con efecto neón brillante
     fig2d.add_shape(
         type="circle", xref="x", yref="y",
         x0=-spot_radius_cm, y0=diferencia_altura_cm - spot_radius_cm,
         x1=spot_radius_cm, y1=diferencia_altura_cm + spot_radius_cm,
-        line=dict(color="#FFFFFF", width=1.5),
-        fillcolor="rgba(255, 255, 255, 0.15)"
+        line=dict(color="#00FF80", width=2),
+        fillcolor="rgba(0, 255, 128, 0.2)"
     )
 
     fig2d.add_trace(go.Scatter(
         x=[0], y=[diferencia_altura_cm],
         mode='markers', name=txt["target_point"],
-        marker=dict(size=7, color='#FFFFFF', symbol='cross')
+        marker=dict(size=8, color='#00FF80', symbol='cross', line=dict(width=1, color='#FFFFFF'))
     ))
 
     fig2d.add_trace(go.Scatter(
         x=[0], y=[0],
         mode='markers', name=txt["target_center"],
-        marker=dict(size=6, color='#8F9D8A', symbol='circle')
+        marker=dict(size=6, color='#00B4D8', symbol='circle')
     ))
 
     fig2d.update_layout(
-        title=dict(text=txt["target_2d_title"], font=dict(color="#FFFFFF", size=13)),
-        paper_bgcolor='#0F1210', plot_bgcolor='#0F1210',
-        height=450, margin=dict(l=10, r=10, t=35, b=10),
-        xaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#8F9D8A"), title=f"X ({h_unit})"),
-        yaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#8F9D8A"), title=f"Y ({h_unit})", scaleanchor="x", scaleratio=1),
-        legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center", font=dict(color="#E2E8E4", size=9), bgcolor="rgba(15, 18, 16, 0.9)")
+        title=dict(text=txt["target_2d_title"], font=dict(color="#00FF80", size=13)),
+        paper_bgcolor='#060A08', plot_bgcolor='#060A08',
+        height=460, margin=dict(l=10, r=10, t=45, b=10),
+        xaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#00FF80"), title=f"X ({h_unit})"),
+        yaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#00FF80"), title=f"Y ({h_unit})", scaleanchor="x", scaleratio=1),
+        legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center", font=dict(color="#E2E8E4", size=9), bgcolor="rgba(6, 10, 8, 0.95)")
     )
     st.plotly_chart(fig2d, use_container_width=True, key="grafica_diana_2d")
 
-# --- TARJETA DE MÉTRICAS INSTITUCIONALES ---
+# --- TARJETA DE MÉTRICAS INSTITUCIONALES NEÓN ---
 st.markdown(f"""
     <div class="metric-card-container">
         <div style="text-align: center; flex: 1;">
-            <span style="color: #8F9D8A; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">{txt['diff_height']}</span><br>
-            <span style="color: #FFFFFF; font-size: 16px; font-weight: 600;">{diff_height_display:.2f} {h_unit}</span>
+            <span style="color: #00FF80; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,128,0.5);">{txt['diff_height']}</span><br>
+            <span style="color: #FFFFFF; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.4);">{diff_height_display:.2f} {h_unit}</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 10px; flex: 1;">
-            <span style="color: #8F9D8A; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">{txt['sight_angle']}</span><br>
-            <span style="color: #FFFFFF; font-size: 16px; font-weight: 600;">{angulo_deg:.4f}°</span>
+        <div style="text-align: center; border-left: 1px solid rgba(0, 255, 128, 0.2); padding-left: 10px; flex: 1;">
+            <span style="color: #00FF80; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,128,0.5);">{txt['sight_angle']}</span><br>
+            <span style="color: #FFFFFF; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.4);">{angulo_deg:.4f}°</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 10px; flex: 1.2;">
-            <span style="color: #8F9D8A; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">{txt['angular_adj']}</span><br>
-            <span style="color: #FFFFFF; font-size: 16px; font-weight: 600;">{moa:.2f} MOA | {mrad:.2f} mrad</span>
+        <div style="text-align: center; border-left: 1px solid rgba(0, 255, 128, 0.2); padding-left: 10px; flex: 1.2;">
+            <span style="color: #00FF80; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,128,0.5);">{txt['angular_adj']}</span><br>
+            <span style="color: #FFFFFF; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.4);">{moa:.2f} MOA | {mrad:.2f} mrad</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 10px; flex: 1.2;">
-            <span style="color: #8F9D8A; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">{txt['spot_size_lbl']}</span><br>
-            <span style="color: #FFFFFF; font-size: 16px; font-weight: 600;">Ø {spot_size_display:.2f} {h_unit}</span>
+        <div style="text-align: center; border-left: 1px solid rgba(0, 255, 128, 0.2); padding-left: 10px; flex: 1.2;">
+            <span style="color: #00FF80; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,128,0.5);">{txt['spot_size_lbl']}</span><br>
+            <span style="color: #FFFFFF; font-size: 16px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.4);">Ø {spot_size_display:.2f} {h_unit}</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 10px; flex: 1.2;">
-            <span style="color: #8F9D8A; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">{txt['uncertainty_lbl']}</span><br>
-            <span style="color: #FFFFFF; font-size: 14px; font-weight: 600;">{uncertainty_str}</span>
+        <div style="text-align: center; border-left: 1px solid rgba(0, 255, 128, 0.2); padding-left: 10px; flex: 1.2;">
+            <span style="color: #00FF80; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0,255,128,0.5);">{txt['uncertainty_lbl']}</span><br>
+            <span style="color: #00B4D8; font-size: 14px; font-weight: 700; text-shadow: 0 0 8px rgba(0,180,216,0.6);">{uncertainty_str}</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -945,7 +1005,7 @@ with col_export:
         st.download_button(
             label=txt["export_csv"],
             data=csv_data,
-            file_name="historial_colimacion_cio.csv",
+            file_name="historial_colimacion_cio_neon.csv",
             mime="text/csv",
             use_container_width=True
         )
