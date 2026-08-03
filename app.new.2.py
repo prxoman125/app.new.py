@@ -16,7 +16,7 @@ st.set_page_config(
 
 
 # =========================================================================
-# 🔒 MÓDULO DE SEGURIDAD CON MARCO HUD ANIMADO DE CARGA Y ESCANEO (AZUL/MORADO NEÓN BRILLANTE)
+# 🔒 MÓDULO DE SEGURIDAD CON MARCO HUD ANIMADO DE CARGA Y ESCANEO (NEÓN ARCOÍRIS)
 # =========================================================================
 
 USUARIOS_PERMITIDOS = [
@@ -48,24 +48,24 @@ if not st.session_state.autenticado:
                 height: 0px;
             }
             .stApp {
-                background-color: #03050c !important;
+                background-color: #020205 !important;
                 overflow-x: hidden;
             }
 
-            /* Fondo Avanzado con Malla Sci-Fi más notoria sin saturar */
+            /* Fondo Avanzado con Malla Sci-Fi de Arcoíris Neón Sutil */
             .grid-bg {
                 position: fixed;
                 top: 0; left: 0; width: 100vw; height: 100vh;
                 background: 
-                    linear-gradient(rgba(0, 240, 255, 0.08) 1.2px, transparent 1.2px),
-                    linear-gradient(90deg, rgba(147, 51, 234, 0.08) 1.2px, transparent 1.2px);
-                background-size: 35px 35px, 35px 35px;
-                animation: gridMove 25s linear infinite;
+                    linear-gradient(rgba(0, 240, 255, 0.06) 1.2px, transparent 1.2px),
+                    linear-gradient(90deg, rgba(255, 0, 128, 0.06) 1.2px, transparent 1.2px);
+                background-size: 30px 30px, 30px 30px;
+                animation: gridMove 20s linear infinite;
                 z-index: 0;
                 pointer-events: none;
             }
 
-            /* Indicadores Globales de la Interfaz en Esquinas Superiores */
+            /* Indicadores Globales de la Interfaz en Esquinas Superiores con Colores Arcoíris */
             .top-global-hud {
                 position: fixed;
                 top: 15px; left: 25px; right: 25px;
@@ -73,44 +73,44 @@ if not st.session_state.autenticado:
                 justify-content: space-between;
                 font-family: monospace;
                 font-size: 11px;
-                color: #00f0ff;
+                color: #00ffcc;
                 letter-spacing: 1.5px;
                 z-index: 10;
                 opacity: 0.95;
                 pointer-events: none;
-                text-shadow: 0 0 12px rgba(0, 240, 255, 0.85);
+                text-shadow: 0 0 10px #00ffcc, 0 0 20px #ff007f;
             }
 
-            /* Módulos Flotantes Periféricos (Laterales Izquierda y Derecha) */
+            /* Módulos Flotantes Periféricos con Efecto Radar Arcoíris */
             .hud-panel-left, .hud-panel-right {
                 position: fixed;
                 top: 18vh;
                 width: 220px;
                 padding: 16px;
-                background: rgba(5, 12, 25, 0.55);
-                border: 1px solid rgba(0, 240, 255, 0.4);
-                backdrop-filter: blur(10px);
+                background: rgba(5, 8, 20, 0.65);
+                border: 1px solid rgba(0, 240, 255, 0.5);
+                backdrop-filter: blur(12px);
                 border-radius: 12px;
                 font-family: monospace;
                 font-size: 10px;
-                color: #d8b4fe;
+                color: #ffaa00;
                 z-index: 1;
                 pointer-events: none;
-                box-shadow: 0 0 20px rgba(147, 51, 234, 0.15);
-                animation: sidePanelEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                box-shadow: 0 0 25px rgba(255, 0, 128, 0.2), inset 0 0 15px rgba(0, 240, 255, 0.1);
+                animation: sidePanelEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards, rainbowBorderGlow 8s infinite;
             }
 
             .hud-panel-left { left: 4vw; }
             .hud-panel-right { right: 4vw; }
 
             .panel-header {
-                color: #00f0ff;
+                color: #00ff66;
                 font-weight: bold;
-                border-bottom: 1px dashed rgba(0, 240, 255, 0.6);
+                border-bottom: 1px dashed rgba(0, 255, 102, 0.6);
                 padding-bottom: 4px;
                 margin-bottom: 10px;
                 letter-spacing: 1px;
-                text-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
+                text-shadow: 0 0 8px #00ff66;
             }
 
             .hud-data-row {
@@ -119,57 +119,72 @@ if not st.session_state.autenticado:
                 margin-bottom: 6px;
             }
 
-            /* Contenedor Exterior con Borde Neon Azul/Morado Muy Brillante */
+            /* Contenedor Exterior con Borde Neón Multicolor Arcoíris Animado y Pulsante */
             .login-wrapper {
                 position: relative;
                 max-width: 460px;
                 margin: 4vh auto 0 auto;
-                padding: 2.5px;
-                border-radius: 20px;
-                background: linear-gradient(135deg, #00f0ff, #c084fc, #00f0ff, #9333ea);
-                background-size: 300% 300%;
-                animation: borderGlow 5s ease infinite, entranceZoom 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-                box-shadow: 0 0 35px rgba(0, 240, 255, 0.45), 0 0 50px rgba(147, 51, 234, 0.35);
+                padding: 3px;
+                border-radius: 22px;
+                background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #00f0ff, #8b00ff, #ff007f);
+                background-size: 600% 600%;
+                animation: rainbowBorderMove 6s linear infinite, entranceZoom 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                box-shadow: 0 0 40px rgba(0, 240, 255, 0.5), 0 0 70px rgba(255, 0, 128, 0.4), 0 0 20px rgba(0, 255, 102, 0.3);
             }
 
-            /* Aureola Fina Giratoria Exterior alrededor de la Interfaz Principal (Más Brillante) */
+            /* Aureola Externa Giratoria Arcoíris de Alta Intensidad */
             .aureola-halo {
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                width: 540px;
-                height: 540px;
+                width: 560px;
+                height: 560px;
                 transform: translate(-50%, -50%);
-                border: 1.5px dashed rgba(0, 240, 255, 0.85);
+                border: 2px dashed rgba(255, 0, 128, 0.9);
                 border-radius: 50%;
-                animation: haloRotate 20s linear infinite;
+                animation: haloRotate 18s linear infinite;
                 pointer-events: none;
                 z-index: 0;
-                box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+                box-shadow: 0 0 20px rgba(255, 0, 128, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.6);
             }
 
-            /* Nueva Aureola Fina Giratoria Interior (Más Brillante) */
+            /* Aureola Interna Giratoria en Sentido Contrario (Colores Cálidos Neón) */
             .aureola-halo-inner {
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                width: 475px;
-                height: 475px;
+                width: 480px;
+                height: 480px;
                 transform: translate(-50%, -50%);
-                border: 1.5px dashed rgba(192, 132, 252, 0.9);
+                border: 2px dashed rgba(255, 234, 0, 0.9);
                 border-radius: 50%;
-                animation: haloRotateReverse 15s linear infinite;
+                animation: haloRotateReverse 12s linear infinite;
                 pointer-events: none;
                 z-index: 0;
-                box-shadow: 0 0 15px rgba(147, 51, 234, 0.5);
+                box-shadow: 0 0 20px rgba(255, 234, 0, 0.6);
             }
 
-            /* Tarjeta Interior de Login con Glassmorphism Dark Blue/Purple */
+            /* Tercera Aureola Óptica Pulsante Extra */
+            .aureola-halo-extra {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 400px;
+                height: 400px;
+                transform: translate(-50%, -50%);
+                border: 1.5px dotted rgba(0, 255, 102, 0.8);
+                border-radius: 50%;
+                animation: haloRotate 8s linear infinite, extraPulse 3s ease-in-out infinite alternate;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            /* Tarjeta Interior de Login con Vidrio Oscuro y Reflejos Neón */
             .login-card {
                 position: relative;
-                background: rgba(6, 10, 22, 0.94);
-                backdrop-filter: blur(16px);
-                border-radius: 18px;
+                background: rgba(4, 7, 18, 0.96);
+                backdrop-filter: blur(18px);
+                border-radius: 20px;
                 padding: 25px 25px 15px 25px;
                 z-index: 2;
             }
@@ -181,36 +196,36 @@ if not st.session_state.autenticado:
                 align-items: center;
                 font-family: monospace;
                 font-size: 10px;
-                color: #00f0ff;
+                color: #00ffcc;
                 letter-spacing: 1px;
                 margin-bottom: 12px;
-                border-bottom: 1px solid rgba(0, 240, 255, 0.35);
+                border-bottom: 1px solid rgba(0, 240, 255, 0.4);
                 padding-bottom: 6px;
-                text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+                text-shadow: 0 0 8px #00ffcc;
             }
 
             .loading-bar-container {
                 width: 100%;
-                height: 3.5px;
-                background: rgba(0, 240, 255, 0.15);
+                height: 4px;
+                background: rgba(255, 255, 255, 0.1);
                 border-radius: 2px;
                 overflow: hidden;
                 margin-bottom: 15px;
             }
 
             .loading-bar-fill {
-                width: 40%;
+                width: 50%;
                 height: 100%;
-                background: linear-gradient(90deg, transparent, #00f0ff, #c084fc, transparent);
-                box-shadow: 0 0 10px #00f0ff;
-                animation: loadingSweep 1.8s ease-in-out infinite;
+                background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #00f0ff, #8b00ff, #ff007f);
+                box-shadow: 0 0 12px #00f0ff, 0 0 12px #ff007f;
+                animation: loadingSweep 1.5s ease-in-out infinite;
             }
 
-            /* Contenedor HUD Animado Central */
+            /* Contenedor HUD Animado Central con Óptica Avanzada */
             .hud-box {
                 position: relative;
-                width: 130px;
-                height: 130px;
+                width: 135px;
+                height: 135px;
                 margin: 0 auto 12px auto;
                 display: flex;
                 justify-content: center;
@@ -218,69 +233,69 @@ if not st.session_state.autenticado:
                 overflow: hidden;
             }
 
-            /* Esquinas HUD */
+            /* Esquinas HUD Arcoíris parpadeantes */
             .corner {
                 position: absolute;
-                width: 20px;
-                height: 20px;
+                width: 22px;
+                height: 22px;
                 border-color: #00f0ff;
                 border-style: solid;
-                animation: cornerPulse 2s infinite alternate ease-in-out;
+                animation: cornerRainbowPulse 3s infinite alternate ease-in-out;
                 z-index: 2;
             }
-            .top-left { top: 2px; left: 2px; border-width: 3px 0 0 3px; border-top-left-radius: 4px; }
-            .top-right { top: 2px; right: 2px; border-width: 3px 3px 0 0; border-top-right-radius: 4px; }
-            .bottom-left { bottom: 2px; left: 2px; border-width: 0 0 3px 3px; border-bottom-left-radius: 4px; }
-            .bottom-right { bottom: 2px; right: 2px; border-width: 0 3px 3px 0; border-bottom-right-radius: 4px; }
+            .top-left { top: 2px; left: 2px; border-width: 3.5px 0 0 3.5px; border-top-left-radius: 6px; }
+            .top-right { top: 2px; right: 2px; border-width: 3.5px 3.5px 0 0; border-top-right-radius: 6px; }
+            .bottom-left { bottom: 2px; left: 2px; border-width: 0 0 3.5px 3.5px; border-bottom-left-radius: 6px; }
+            .bottom-right { bottom: 2px; right: 2px; border-width: 0 3.5px 3.5px 0; border-bottom-right-radius: 6px; }
 
-            /* Anillos Giratorios Internos */
+            /* Anillos Giratorios Internos Multicapa */
             .hud-ring-outer {
                 position: absolute;
-                width: 95px;
-                height: 95px;
-                border: 1.5px dashed rgba(0, 240, 255, 0.75);
+                width: 100px;
+                height: 100px;
+                border: 2px dashed rgba(255, 0, 128, 0.85);
                 border-radius: 50%;
-                animation: rotateRight 9s linear infinite;
-                box-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+                animation: rotateRight 8s linear infinite;
+                box-shadow: 0 0 12px rgba(255, 0, 128, 0.6);
             }
 
             .hud-ring-inner {
                 position: absolute;
-                width: 60px;
-                height: 60px;
-                border: 1.5px dotted rgba(192, 132, 252, 0.9);
+                width: 65px;
+                height: 65px;
+                border: 2px dotted rgba(0, 255, 102, 0.9);
                 border-radius: 50%;
                 animation: rotateLeft 5s linear infinite;
-                box-shadow: 0 0 8px rgba(147, 51, 234, 0.4);
+                box-shadow: 0 0 12px rgba(0, 255, 102, 0.6);
             }
 
-            /* Retícula Crosshair */
-            .hud-cross-h { position: absolute; width: 85px; height: 1px; background: rgba(0, 240, 255, 0.6); box-shadow: 0 0 6px #00f0ff; }
-            .hud-cross-v { position: absolute; width: 1px; height: 85px; background: rgba(0, 240, 255, 0.6); box-shadow: 0 0 6px #00f0ff; }
+            /* Retícula Crosshair Luminosa */
+            .hud-cross-h { position: absolute; width: 90px; height: 1.5px; background: rgba(0, 240, 255, 0.8); box-shadow: 0 0 8px #00f0ff; }
+            .hud-cross-v { position: absolute; width: 1.5px; height: 90px; background: rgba(255, 234, 0, 0.8); box-shadow: 0 0 8px #ffea00; }
 
-            /* Punto Láser Central Azul/Morado Súper Brillante */
+            /* Núcleo Láser Muticolor Súper Brillante */
             .hud-dot {
                 position: absolute;
-                width: 8px;
-                height: 8px;
-                background-color: #00f0ff;
+                width: 9px;
+                height: 9px;
+                background-color: #ffffff;
                 border-radius: 50%;
-                box-shadow: 0 0 14px #00f0ff, 0 0 25px #c084fc, 0 0 35px #9333ea;
-                animation: laserPulse 1s infinite ease-in-out;
+                box-shadow: 0 0 15px #ff0000, 0 0 25px #ff7f00, 0 0 35px #ffff00, 0 0 45px #00ff00, 0 0 55px #00f0ff, 0 0 65px #8b00ff;
+                animation: laserPulseRainbow 1.2s infinite ease-in-out;
                 z-index: 3;
             }
 
-            /* Scanline Vertical */
+            /* Escaneo Láser Vertical Avanzado */
             .hud-scanline {
                 position: absolute;
                 top: -100%;
                 left: 0;
                 width: 100%;
-                height: 35%;
-                background: linear-gradient(180deg, rgba(0, 240, 255, 0) 0%, rgba(0, 240, 255, 0.5) 100%);
-                border-bottom: 2px solid #00f0ff;
-                box-shadow: 0 0 10px #00f0ff;
-                animation: scanMove 2.5s infinite ease-in-out;
+                height: 40%;
+                background: linear-gradient(180deg, rgba(255, 0, 128, 0) 0%, rgba(0, 240, 255, 0.7) 50%, rgba(0, 255, 102, 0.9) 100%);
+                border-bottom: 2.5px solid #ff00ff;
+                box-shadow: 0 0 15px #ff00ff, 0 0 25px #00f0ff;
+                animation: scanMove 2s infinite ease-in-out;
                 z-index: 1;
             }
 
@@ -293,27 +308,42 @@ if not st.session_state.autenticado:
                 letter-spacing: 1px;
                 text-transform: uppercase;
                 margin: 0;
-                text-shadow: 0 0 12px rgba(0, 240, 255, 0.7);
+                text-shadow: 0 0 15px #00f0ff, 0 0 25px #ff007f;
             }
             .login-subtitle {
-                color: #00f0ff;
+                color: #00ffcc;
                 font-size: 10px;
                 text-align: center;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.8px;
                 opacity: 0.95;
                 margin-top: 4px;
                 margin-bottom: 12px;
                 font-family: monospace;
-                text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+                text-shadow: 0 0 10px #00ffcc;
             }
 
-            /* Resplandor Láser Azul Intenso en Inputs */
+            /* Resplandor Láser Multicolor en Inputs */
             div[data-baseweb="input"] input:focus {
-                border-color: #00f0ff !important;
-                box-shadow: 0 0 18px rgba(0, 240, 255, 0.8) !important;
+                border-color: #ff007f !important;
+                box-shadow: 0 0 20px rgba(255, 0, 127, 0.8), 0 0 10px rgba(0, 240, 255, 0.8) !important;
             }
 
-            /* Keyframes de Animaciones */
+            /* Keyframes de Animaciones Mejoradas y Arcoíris */
+            @keyframes rainbowBorderMove {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            @keyframes rainbowBorderGlow {
+                0% { border-color: #ff0000; box-shadow: 0 0 15px rgba(255,0,0,0.3); }
+                20% { border-color: #ffff00; box-shadow: 0 0 15px rgba(255,255,0,0.3); }
+                40% { border-color: #00ff00; box-shadow: 0 0 15px rgba(0,255,0,0.3); }
+                60% { border-color: #00f0ff; box-shadow: 0 0 15px rgba(0,240,255,0.3); }
+                80% { border-color: #8b00ff; box-shadow: 0 0 15px rgba(139,0,255,0.3); }
+                100% { border-color: #ff0000; box-shadow: 0 0 15px rgba(255,0,0,0.3); }
+            }
+
             @keyframes haloRotate {
                 from { transform: translate(-50%, -50%) rotate(0deg); }
                 to { transform: translate(-50%, -50%) rotate(360deg); }
@@ -324,30 +354,29 @@ if not st.session_state.autenticado:
                 to { transform: translate(-50%, -50%) rotate(0deg); }
             }
 
+            @keyframes extraPulse {
+                0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.6; }
+                100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+            }
+
             @keyframes entranceZoom {
-                0% { opacity: 0; transform: scale(0.92) translateY(-20px); }
+                0% { opacity: 0; transform: scale(0.9) translateY(-25px); }
                 100% { opacity: 1; transform: scale(1) translateY(0); }
             }
 
             @keyframes sidePanelEntrance {
-                0% { opacity: 0; transform: translateY(30px); }
+                0% { opacity: 0; transform: translateY(35px); }
                 100% { opacity: 1; transform: translateY(0); }
             }
 
-            @keyframes borderGlow {
-                0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
-            }
-
             @keyframes loadingSweep {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(250%); }
+                0% { transform: translateX(-120%); }
+                100% { transform: translateX(280%); }
             }
 
             @keyframes gridMove {
                 0% { background-position: 0 0, 0 0; }
-                100% { background-position: 35px 35px, 35px 35px; }
+                100% { background-position: 30px 30px, 30px 30px; }
             }
 
             @keyframes rotateRight {
@@ -360,50 +389,52 @@ if not st.session_state.autenticado:
                 to { transform: rotate(-360deg); }
             }
 
-            @keyframes cornerPulse {
-                0% { border-color: #00f0ff; filter: drop-shadow(0 0 5px #00f0ff); }
-                100% { border-color: #c084fc; filter: drop-shadow(0 0 12px #c084fc); }
+            @keyframes cornerRainbowPulse {
+                0% { border-color: #ff007f; filter: drop-shadow(0 0 6px #ff007f); }
+                33% { border-color: #ffff00; filter: drop-shadow(0 0 6px #ffff00); }
+                66% { border-color: #00ffcc; filter: drop-shadow(0 0 6px #00ffcc); }
+                100% { border-color: #8b00ff; filter: drop-shadow(0 0 6px #8b00ff); }
             }
 
-            @keyframes laserPulse {
-                0%, 100% { transform: scale(0.85); opacity: 0.8; }
-                50% { transform: scale(1.4); opacity: 1; }
+            @keyframes laserPulseRainbow {
+                0%, 100% { transform: scale(0.8); filter: hue-rotate(0deg); opacity: 0.85; }
+                50% { transform: scale(1.5); filter: hue-rotate(360deg); opacity: 1; }
             }
 
             @keyframes scanMove {
-                0% { top: -40%; }
+                0% { top: -45%; }
                 50% { top: 100%; }
-                100% { top: -40%; }
+                100% { top: -45%; }
             }
 
             /* Ocultar elementos decorativos en dispositivos móviles */
             @media (max-width: 1024px) {
-                .hud-panel-left, .hud-panel-right, .aureola-halo, .aureola-halo-inner { display: none; }
+                .hud-panel-left, .hud-panel-right, .aureola-halo, .aureola-halo-inner, .aureola-halo-extra { display: none; }
             }
         </style>
 
         <div class="grid-bg"></div>
 
         <div class="top-global-hud">
-            <span>● SYSTEM: ONLINE</span>
-            <span>ENCRYPTION: AES-256</span>
-            <span>NODE: CIO-OPTICS-LAB</span>
+            <span>● SYSTEM: ONLINE (MULTI-SPECTRUM)</span>
+            <span>ENCRYPTION: QUANTUM-AES</span>
+            <span>NODE: CIO-LAB-ADVANCED</span>
         </div>
 
         <div class="hud-panel-left">
-            <div class="panel-header">DIAGNOSTICO_LAB</div>
-            <div class="hud-data-row"><span>INTERFEROMETRO:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">ESTABLE</span></div>
-            <div class="hud-data-row"><span>SENSORES PSD:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">CALIBRADOS</span></div>
-            <div class="hud-data-row"><span>HAZ LASER:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">TEM00</span></div>
-            <div class="hud-data-row"><span>METROLOGÍA:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">ACTIVA</span></div>
+            <div class="panel-header">DIAGNOSTICO_MULTIESPECTRAL</div>
+            <div class="hud-data-row"><span>INTERFEROMETRO:</span><span style="color:#00ffcc; text-shadow:0 0 6px #00ffcc">ESTABLE</span></div>
+            <div class="hud-data-row"><span>SENSORES PSD:</span><span style="color:#00ff66; text-shadow:0 0 6px #00ff66">CALIBRADOS</span></div>
+            <div class="hud-data-row"><span>HAZ LASER:</span><span style="color:#ff007f; text-shadow:0 0 6px #ff007f">MULTIMODO</span></div>
+            <div class="hud-data-row"><span>ESPECTRO:</span><span style="color:#ffff00; text-shadow:0 0 6px #ffff00">ARCOÍRIS_ON</span></div>
         </div>
 
         <div class="hud-panel-right">
-            <div class="panel-header">TELEMETRIA_SISTEMA</div>
-            <div class="hud-data-row"><span>ESTACIÓN:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">CIO-LEÓN</span></div>
-            <div class="hud-data-row"><span>ADQUISICIÓN:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">100 kS/s</span></div>
-            <div class="hud-data-row"><span>BANCADA:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">OPTOMECÁNICA</span></div>
-            <div class="hud-data-row"><span>ESTABILIDAD:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">λ/10</span></div>
+            <div class="panel-header">TELEMETRIA_OPTICA</div>
+            <div class="hud-data-row"><span>ESTACIÓN:</span><span style="color:#00ffcc; text-shadow:0 0 6px #00ffcc">CIO-LEÓN</span></div>
+            <div class="hud-data-row"><span>ADQUISICIÓN:</span><span style="color:#ff007f; text-shadow:0 0 6px #ff007f">250 kS/s</span></div>
+            <div class="hud-data-row"><span>BANCADA:</span><span style="color:#ffff00; text-shadow:0 0 6px #ffff00">DINÁMICA</span></div>
+            <div class="hud-data-row"><span>ESTABILIDAD:</span><span style="color:#00ff66; text-shadow:0 0 6px #00ff66">λ/20</span></div>
         </div>
     """, unsafe_allow_html=True)
     
@@ -414,9 +445,10 @@ if not st.session_state.autenticado:
             <div class="login-wrapper">
                 <div class="aureola-halo"></div>
                 <div class="aureola-halo-inner"></div>
+                <div class="aureola-halo-extra"></div>
                 <div class="login-card">
                     <div class="status-bar-top">
-                        <span>SYS.STATUS: ONLINE</span>
+                        <span>SYS.STATUS: MULTI-SPECTRUM ACTIVE</span>
                         <span>LINK: 100% SECURE</span>
                     </div>
                     <div class="loading-bar-container">
@@ -434,8 +466,8 @@ if not st.session_state.autenticado:
                         <div class="hud-dot"></div>
                         <div class="hud-scanline"></div>
                     </div>
-                    <div class="login-title">Autenticación de Laboratorio</div>
-                    <div class="login-subtitle">● SISTEMA DE METROLOGÍA Y ALINEACIÓN ÓPTICA</div>
+                    <div class="login-title">Autenticación Espectral</div>
+                    <div class="login-subtitle">● SISTEMA DE METROLOGÍA Y ALINEACIÓN ÓPTICA AVANZADA</div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -453,8 +485,8 @@ if not st.session_state.autenticado:
                     st.session_state.autenticado = True
                     st.session_state.intentos = 0
                     
-                    with st.spinner("🔍 Analizando matriz de covarianza y calibrando transductores..."):
-                        time.sleep(1.2)
+                    with st.spinner("🔍 Analizando espectro multiespectral y calibrando transductores de alta velocidad..."):
+                        time.sleep(1.0)
                     st.rerun()
                 else:
                     st.session_state.intentos += 1
@@ -467,7 +499,7 @@ if not st.session_state.autenticado:
 
 
 # =========================================================================
-# 👇 CÓDIGO DEL SIMULADOR DE METROLOGÍA ÓPTICA (ESTÉTICA AZUL/MORADO NEÓN)
+# 👇 CÓDIGO DEL SIMULADOR DE METROLOGÍA ÓPTICA (ESTÉTICA NEÓN ARCOÍRIS)
 # =========================================================================
 
 # --- BASE DE DATOS SQLITE ---
@@ -529,7 +561,7 @@ def clear_db():
 # Inicializar Base de Datos
 init_db()
 
-# --- ESTILOS CSS PERSONALIZADOS (AZUL/MORADO NEÓN GLOW & SLIM LAYOUT) ---
+# --- ESTILOS CSS PERSONALIZADOS (NEÓN ARCOÍRIS VIVO & SLIM LAYOUT OPTIMIZADO) ---
 st.markdown("""
     <style>
         /* Ocultar Barra Superior y Toolbar de Streamlit */
@@ -547,19 +579,19 @@ st.markdown("""
             padding-left: 2rem !important;
             padding-right: 2rem !important;
             max-width: 100% !important;
-            animation: fadeIn 0.8s ease-out;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .stApp {
-            background-color: #03050c !important;
-            color: #f3e8ff !important;
+            background-color: #020205 !important;
+            color: #ffffff !important;
         }
 
-        /* Estilo de la Barra Lateral */
+        /* Estilo de la Barra Lateral con Tonalidades Dinámicas */
         [data-testid="stSidebar"] {
-            background-color: #070b19 !important;
-            border-right: 1px solid rgba(0, 149, 255, 0.25) !important;
-            box-shadow: 4px 0px 18px rgba(147, 51, 234, 0.08);
+            background-color: #050814 !important;
+            border-right: 1px solid rgba(0, 240, 255, 0.3) !important;
+            box-shadow: 4px 0px 20px rgba(255, 0, 127, 0.1);
         }
 
         [data-testid="stSidebar"] > div:first-child {
@@ -567,33 +599,33 @@ st.markdown("""
         }
 
         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
-            color: #00f0ff !important;
+            color: #00ffcc !important;
             font-size: 13px !important;
             font-weight: 700 !important;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 15px !important;
             margin-bottom: 10px !important;
-            border-bottom: 1px solid rgba(0, 149, 255, 0.2) !important;
+            border-bottom: 1px solid rgba(255, 0, 127, 0.4) !important;
             padding-bottom: 4px;
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+            text-shadow: 0 0 10px #00ffcc, 0 0 15px #ff007f;
         }
 
-        /* Botones Interactivos */
+        /* Botones Interactivos Multitono Neón */
         div.stButton > button {
-            background: linear-gradient(135deg, #0b132b 0%, #171033 100%) !important;
-            color: #00f0ff !important;
-            border: 1px solid rgba(0, 149, 255, 0.4) !important;
+            background: linear-gradient(135deg, #091326 0%, #1e0926 100%) !important;
+            color: #00ffcc !important;
+            border: 1px solid rgba(0, 240, 255, 0.5) !important;
             border-radius: 8px !important;
             font-weight: 600 !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            box-shadow: 0 0 10px rgba(0, 149, 255, 0.1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
         }
         div.stButton > button:hover {
-            background: #00f0ff !important;
-            color: #03050c !important;
-            box-shadow: 0px 0px 18px rgba(0, 240, 255, 0.6) !important;
-            border-color: #00f0ff !important;
+            background: linear-gradient(90deg, #ff007f, #00f0ff) !important;
+            color: #020205 !important;
+            box-shadow: 0px 0px 20px #ff007f, 0px 0px 25px #00f0ff !important;
+            border-color: #ffffff !important;
             transform: translateY(-1px);
         }
 
@@ -603,10 +635,10 @@ st.markdown("""
         div[data-baseweb="spinbutton"] button,
         [data-testid="stNumberInputStepDown"],
         [data-testid="stNumberInputStepUp"] {
-            color: #00f0ff !important;
-            background-color: #0b132b !important;
-            border-color: rgba(0, 149, 255, 0.3) !important;
-            transition: all 0.25s ease !important;
+            color: #ffff00 !important;
+            background-color: #0a1128 !important;
+            border-color: rgba(255, 255, 0, 0.4) !important;
+            transition: all 0.2s ease !important;
         }
 
         button[aria-label="Increase value"]:hover, 
@@ -614,62 +646,62 @@ st.markdown("""
         div[data-baseweb="spinbutton"] button:hover,
         [data-testid="stNumberInputStepDown"]:hover,
         [data-testid="stNumberInputStepUp"]:hover {
-            background-color: #00f0ff !important;
-            color: #03050c !important;
-            box-shadow: 0px 0px 12px rgba(0, 240, 255, 0.5) !important;
-            border-color: #00f0ff !important;
+            background-color: #ffff00 !important;
+            color: #020205 !important;
+            box-shadow: 0px 0px 15px #ffff00 !important;
+            border-color: #ffff00 !important;
         }
 
         /* Campos de Entrada e Selects */
         div[data-baseweb="input"], div[data-baseweb="select"] > div {
-            background-color: #0b132b !important;
-            border: 1px solid rgba(0, 149, 255, 0.25) !important;
+            background-color: #070d21 !important;
+            border: 1px solid rgba(0, 240, 255, 0.35) !important;
             color: #ffffff !important;
             border-radius: 6px !important;
-            transition: all 0.3s ease !important;
+            transition: all 0.25s ease !important;
         }
 
         div[data-baseweb="input"]:hover, div[data-baseweb="select"] > div:hover {
-            border-color: rgba(0, 149, 255, 0.6) !important;
-            box-shadow: 0 0 10px rgba(0, 149, 255, 0.25) !important;
+            border-color: rgba(255, 0, 127, 0.7) !important;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3) !important;
         }
 
-        /* Tarjetas de Métricas con Glow Dinámico Azul/Morado Neón */
+        /* Tarjetas de Métricas con Glow Dinámico Arcoíris Neón */
         .metric-card-container {
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            background: linear-gradient(135deg, #070b19 0%, #100f2b 100%);
-            border: 1px solid rgba(0, 149, 255, 0.35); 
+            background: linear-gradient(135deg, #060a1c 0%, #170724 100%);
+            border: 1px solid rgba(0, 240, 255, 0.45); 
             padding: 16px 20px; 
             border-radius: 12px; 
             margin-top: 15px; 
             margin-bottom: 25px;
-            box-shadow: 0 0 20px rgba(147, 51, 234, 0.15);
-            animation: pulseGlow 4s infinite alternate ease-in-out, slideUp 0.6s ease-out;
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.2), inset 0 0 15px rgba(0, 240, 255, 0.1);
+            animation: pulseRainbowGlow 5s infinite alternate ease-in-out, slideUp 0.5s ease-out;
         }
 
         /* Confirmaciones */
         div.btn-confirm-yes > div.stButton > button {
-            background: linear-gradient(135deg, #092c1d 0%, #114e34 100%) !important;
-            color: #38ef7d !important;
-            border: 1px solid #114e34 !important;
+            background: linear-gradient(135deg, #062b1a 0%, #0e4c30 100%) !important;
+            color: #00ff66 !important;
+            border: 1px solid #00ff66 !important;
         }
         div.btn-confirm-yes > div.stButton > button:hover {
-            background: #38ef7d !important;
-            color: #000000 !important;
-            box-shadow: 0px 0px 15px rgba(56, 239, 125, 0.5);
+            background: #00ff66 !important;
+            color: #020205 !important;
+            box-shadow: 0px 0px 18px rgba(0, 255, 102, 0.7);
         }
 
         div.btn-confirm-cancel > div.stButton > button {
-            background: linear-gradient(135deg, #380e14 0%, #5d1621 100%) !important;
-            color: #ff4d4d !important;
-            border: 1px solid #5d1621 !important;
+            background: linear-gradient(135deg, #380816 0%, #631027 100%) !important;
+            color: #ff3366 !important;
+            border: 1px solid #ff3366 !important;
         }
         div.btn-confirm-cancel > div.stButton > button:hover {
-            background: #ff4d4d !important;
-            color: #000000 !important;
-            box-shadow: 0px 0px 15px rgba(255, 77, 77, 0.5);
+            background: #ff3366 !important;
+            color: #020205 !important;
+            box-shadow: 0px 0px 18px rgba(255, 51, 102, 0.7);
         }
 
         /* Keyframes de Animaciones Generales */
@@ -679,13 +711,14 @@ st.markdown("""
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 15px rgba(0, 149, 255, 0.12), inset 0 0 10px rgba(147, 51, 234, 0.05); }
-            100% { box-shadow: 0 0 25px rgba(0, 149, 255, 0.3), inset 0 0 15px rgba(147, 51, 234, 0.1); }
+        @keyframes pulseRainbowGlow {
+            0% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2), inset 0 0 10px rgba(255, 0, 127, 0.1); border-color: #00f0ff; }
+            50% { box-shadow: 0 0 25px rgba(255, 0, 127, 0.3), inset 0 0 15px rgba(255, 234, 0, 0.1); border-color: #ff007f; }
+            100% { box-shadow: 0 0 25px rgba(0, 255, 102, 0.25), inset 0 0 10px rgba(0, 240, 255, 0.1); border-color: #00ff66; }
         }
     </style>
 """, unsafe_allow_html=True)
@@ -962,20 +995,20 @@ else:
     D_m = D_val * 0.9144
     D_cm, H_mira_cm, H_extra_cm = D_val * 91.44, H_mira * 2.54, H_extra * 2.54
 
-# --- ENCABEZADO PRINCIPAL (CON LUZ NEÓN AZUL/MORADO) ---
+# --- ENCABEZADO PRINCIPAL (CON LUZ NEÓN ARCOÍRIS) ---
 st.markdown(f"""
-    <div style="background: linear-gradient(135deg, #070b19 0%, #110e28 100%);
+    <div style="background: linear-gradient(135deg, #070b19 0%, #200824 100%);
                 padding: 14px 25px;
                 border-radius: 12px;
-                border-left: 5px solid #00f0ff;
-                border: 1px solid rgba(0, 149, 255, 0.3);
+                border-left: 5px solid #00ffcc;
+                border: 1px solid rgba(255, 0, 127, 0.4);
                 margin-bottom: 20px;
-                box-shadow: 0px 4px 20px rgba(147, 51, 234, 0.15);">
-        <h2 style="color: #ffffff; margin: 0; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,240,255,0.3);">
+                box-shadow: 0px 4px 25px rgba(255, 0, 127, 0.25);">
+        <h2 style="color: #ffffff; margin: 0; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; letter-spacing: 1px; text-shadow: 0 0 12px #00ffcc, 0 0 20px #ff007f;">
             {txt['title']}
         </h2>
-        <p style="color: #c084fc; margin: 0; font-size: 13px; opacity: 0.9;">
-            Centro de Investigaciones en Óptica (CIO) | Configuración Activa: <b style="color: #00f0ff;">{profile if profile != txt['profile_placeholder'] else 'Ninguna'}</b>
+        <p style="color: #ffff00; margin: 0; font-size: 13px; opacity: 0.95; text-shadow: 0 0 8px rgba(255,255,0,0.5);">
+            Centro de Investigaciones en Óptica (CIO) | Configuración Activa: <b style="color: #00ffcc;">{profile if profile != txt['profile_placeholder'] else 'Ninguna'}</b>
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -1054,7 +1087,7 @@ if save_clicked:
     save_record_to_db(current_record)
     st.sidebar.success(txt["record_saved"])
 
-# --- GRÁFICAS 3D Y 2D CON CONTENEDORES AZUL/MORADO NEÓN ---
+# --- GRÁFICAS 3D Y 2D OPTIMIZADAS (CARGA ULTRARRÁPIDA) CON CONTENEDORES NEÓN ARCOÍRIS ---
 col_3d, col_2d = st.columns([1.75, 1.0])
 
 with col_3d:
@@ -1063,37 +1096,38 @@ with col_3d:
 
     fig3d = go.Figure()
 
-    grid_x = np.linspace(0, max(D_cm, 10), 10)
-    grid_y = np.linspace(-max(abs(H_extra_cm)*1.5, 20), max(abs(H_extra_cm)*1.5, 20), 10)
+    # Reducción de resolución de malla para carga ultrarrápida al modificar inputs
+    grid_x = np.linspace(0, max(D_cm, 10), 5)
+    grid_y = np.linspace(-max(abs(H_extra_cm)*1.5, 20), max(abs(H_extra_cm)*1.5, 20), 5)
     gx, gy = np.meshgrid(grid_x, grid_y)
     gz = np.zeros_like(gx)
 
     fig3d.add_trace(go.Surface(
         x=gx, y=gy, z=gz,
-        colorscale=[[0, '#03050c'], [1, '#0e1124']],
-        showscale=False, opacity=0.6, hoverinfo='none'
+        colorscale=[[0, '#020205'], [1, '#130826']],
+        showscale=False, opacity=0.5, hoverinfo='none'
     ))
 
     fig3d.add_trace(go.Scatter3d(
         x=[0, D_cm], y=[0, 0], z=[0, y_ref_end],
         mode='lines+markers',
         name=f"{txt['laser_label']} ({ref_angle_deg:.2f}°)",
-        line=dict(color='#00d9ff', width=7, dash='dash'),
-        marker=dict(size=4, color='#00d9ff')
+        line=dict(color='#00ffcc', width=6, dash='dash'),
+        marker=dict(size=4, color='#00ffcc')
     ))
 
     fig3d.add_trace(go.Scatter3d(
         x=[0, D_cm], y=[0, 0], z=[pos_mira[1], pos_impacto_mira[1]],
         mode='lines+markers',
         name=f"{txt['sight_label']} (α = {angulo_deg:.2f}°)",
-        line=dict(color='#00f0ff', width=9),
-        marker=dict(size=5, color='#00f0ff')
+        line=dict(color='#ff007f', width=8),
+        marker=dict(size=5, color='#ff007f')
     ))
 
     fig3d.add_trace(go.Scatter3d(
         x=[D_cm], y=[0], z=[y_ref_end],
         mode='markers', name=txt["target_center"],
-        marker=dict(size=8, color='#ffe600', symbol='circle')
+        marker=dict(size=8, color='#ffff00', symbol='circle')
     ))
 
     fig3d.add_trace(go.Scatter3d(
@@ -1105,20 +1139,20 @@ with col_3d:
     fig3d.update_layout(
         title=dict(
             text=f"📐 <b>{txt['title_graph']} 3D</b>: {D_val:.1f} {d_unit} | <b>α</b>: {angulo_deg:.4f}°",
-            font=dict(color="#00f0ff", size=14)
+            font=dict(color="#00ffcc", size=14)
         ),
-        paper_bgcolor='#050814', plot_bgcolor='#050814',
+        paper_bgcolor='#040714', plot_bgcolor='#040714',
         height=460, margin=dict(l=5, r=5, t=35, b=5),
         scene=dict(
             aspectmode='manual', aspectratio=dict(x=2.0, y=1, z=1.1),
-            xaxis=dict(title='Distancia (cm)', backgroundcolor="#050814", gridcolor="#132347", tickfont=dict(color="#c084fc")),
-            yaxis=dict(title='Eje Transversal', backgroundcolor="#050814", gridcolor="#132347", tickfont=dict(color="#c084fc")),
-            zaxis=dict(title='Elevación (cm)', backgroundcolor="#050814", gridcolor="#132347", tickfont=dict(color="#c084fc")),
+            xaxis=dict(title='Distancia (cm)', backgroundcolor="#040714", gridcolor="#1b1236", tickfont=dict(color="#ffff00")),
+            yaxis=dict(title='Eje Transversal', backgroundcolor="#040714", gridcolor="#1b1236", tickfont=dict(color="#ffff00")),
+            zaxis=dict(title='Elevación (cm)', backgroundcolor="#040714", gridcolor="#1b1236", tickfont=dict(color="#ffff00")),
             camera=dict(eye=dict(x=1.6, y=-1.4, z=0.6))
         ),
-        legend=dict(orientation="h", y=-0.05, x=0.5, xanchor="center", font=dict(color="white", size=10), bgcolor="rgba(11, 19, 43, 0.85)")
+        legend=dict(orientation="h", y=-0.05, x=0.5, xanchor="center", font=dict(color="white", size=10), bgcolor="rgba(6, 10, 28, 0.9)")
     )
-    st.plotly_chart(fig3d, use_container_width=True, key="grafica_optica_3d")
+    st.plotly_chart(fig3d, use_container_width=True, key="grafica_optica_3d", config={'staticPlot': False, 'responsive': True})
 
 with col_2d:
     fig2d = go.Figure()
@@ -1130,19 +1164,19 @@ with col_2d:
         fig2d.add_shape(
             type="circle", xref="x", yref="y",
             x0=-r, y0=-r, x1=r, y1=r,
-            line=dict(color="#291b4a", width=1.5),
-            fillcolor="rgba(30, 20, 60, 0.2)"
+            line=dict(color="#4a1b42", width=1.5),
+            fillcolor="rgba(50, 20, 60, 0.15)"
         )
 
-    fig2d.add_shape(type="line", x0=-max_radius*1.2, y0=0, x1=max_radius*1.2, y1=0, line=dict(color="#3b246b", width=1, dash="dot"))
-    fig2d.add_shape(type="line", x0=0, y0=-max_radius*1.2, x1=0, y1=max_radius*1.2, line=dict(color="#3b246b", width=1, dash="dot"))
+    fig2d.add_shape(type="line", x0=-max_radius*1.2, y0=0, x1=max_radius*1.2, y1=0, line=dict(color="#244b6b", width=1, dash="dot"))
+    fig2d.add_shape(type="line", x0=0, y0=-max_radius*1.2, x1=0, y1=max_radius*1.2, line=dict(color="#244b6b", width=1, dash="dot"))
 
     fig2d.add_shape(
         type="circle", xref="x", yref="y",
         x0=-spot_radius_cm, y0=diferencia_altura_cm - spot_radius_cm,
         x1=spot_radius_cm, y1=diferencia_altura_cm + spot_radius_cm,
-        line=dict(color="#00f0ff", width=2),
-        fillcolor="rgba(0, 240, 255, 0.35)"
+        line=dict(color="#ff007f", width=2),
+        fillcolor="rgba(255, 0, 127, 0.3)"
     )
 
     fig2d.add_trace(go.Scatter(
@@ -1154,41 +1188,41 @@ with col_2d:
     fig2d.add_trace(go.Scatter(
         x=[0], y=[0],
         mode='markers', name=txt["target_center"],
-        marker=dict(size=7, color='#ffe600', symbol='circle')
+        marker=dict(size=7, color='#ffff00', symbol='circle')
     ))
 
     fig2d.update_layout(
-        title=dict(text=txt["target_2d_title"], font=dict(color="#00f0ff", size=14)),
-        paper_bgcolor='#050814', plot_bgcolor='#050814',
+        title=dict(text=txt["target_2d_title"], font=dict(color="#00ffcc", size=14)),
+        paper_bgcolor='#040714', plot_bgcolor='#040714',
         height=460, margin=dict(l=10, r=10, t=35, b=10),
-        xaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#c084fc"), title=f"X ({h_unit})"),
-        yaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#c084fc"), title=f"Y ({h_unit})", scaleanchor="x", scaleratio=1),
-        legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center", font=dict(color="white", size=9), bgcolor="rgba(11, 19, 43, 0.85)")
+        xaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#ffff00"), title=f"X ({h_unit})"),
+        yaxis=dict(range=[-max_radius*1.2, max_radius*1.2], showgrid=False, zeroline=False, tickfont=dict(color="#ffff00"), title=f"Y ({h_unit})", scaleanchor="x", scaleratio=1),
+        legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center", font=dict(color="white", size=9), bgcolor="rgba(6, 10, 28, 0.9)")
     )
-    st.plotly_chart(fig2d, use_container_width=True, key="grafica_diana_2d")
+    st.plotly_chart(fig2d, use_container_width=True, key="grafica_diana_2d", config={'staticPlot': False, 'responsive': True})
 
-# --- MÉTRICAS Y RESULTADOS (ESTILO AZUL/MORADO NEÓN PULSANTE) ---
+# --- MÉTRICAS Y RESULTADOS (ESTILO NEÓN ARCOÍRIS PULSANTE) ---
 st.markdown(f"""
     <div class="metric-card-container">
         <div style="text-align: center; flex: 1;">
-            <span style="color: #c084fc; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['diff_height']}</span><br>
-            <span style="color: #ffffff; font-size: 17px; font-weight: bold;">{diff_height_display:.2f} {h_unit}</span>
+            <span style="color: #ffff00; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['diff_height']}</span><br>
+            <span style="color: #ffffff; font-size: 17px; font-weight: bold; text-shadow: 0 0 8px #ffff00;">{diff_height_display:.2f} {h_unit}</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(0, 149, 255, 0.25); padding-left: 10px; flex: 1;">
-            <span style="color: #c084fc; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['sight_angle']}</span><br>
-            <span style="color: #ffffff; font-size: 17px; font-weight: bold;">{angulo_deg:.4f}°</span>
+        <div style="text-align: center; border-left: 1px solid rgba(0, 240, 255, 0.3); padding-left: 10px; flex: 1;">
+            <span style="color: #00ffcc; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['sight_angle']}</span><br>
+            <span style="color: #ffffff; font-size: 17px; font-weight: bold; text-shadow: 0 0 8px #00ffcc;">{angulo_deg:.4f}°</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(0, 149, 255, 0.25); padding-left: 10px; flex: 1.2;">
-            <span style="color: #c084fc; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['angular_adj']}</span><br>
-            <span style="color: #00f0ff; font-size: 17px; font-weight: bold; text-shadow: 0 0 8px rgba(0,240,255,0.5);">{arcmin:.2f} arcmin | {mrad:.2f} mrad</span>
+        <div style="text-align: center; border-left: 1px solid rgba(0, 240, 255, 0.3); padding-left: 10px; flex: 1.2;">
+            <span style="color: #ff007f; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['angular_adj']}</span><br>
+            <span style="color: #ff007f; font-size: 17px; font-weight: bold; text-shadow: 0 0 10px #ff007f;">{arcmin:.2f} arcmin | {mrad:.2f} mrad</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(0, 149, 255, 0.25); padding-left: 10px; flex: 1.2;">
-            <span style="color: #c084fc; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['spot_size_lbl']}</span><br>
-            <span style="color: #ffffff; font-size: 17px; font-weight: bold;">Ø {spot_size_display:.2f} {h_unit}</span>
+        <div style="text-align: center; border-left: 1px solid rgba(0, 240, 255, 0.3); padding-left: 10px; flex: 1.2;">
+            <span style="color: #00ff66; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['spot_size_lbl']}</span><br>
+            <span style="color: #ffffff; font-size: 17px; font-weight: bold; text-shadow: 0 0 8px #00ff66;">Ø {spot_size_display:.2f} {h_unit}</span>
         </div>
-        <div style="text-align: center; border-left: 1px solid rgba(0, 149, 255, 0.25); padding-left: 10px; flex: 1.2;">
-            <span style="color: #c084fc; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['uncertainty_lbl']}</span><br>
-            <span style="color: #38ef7d; font-size: 15px; font-weight: bold; text-shadow: 0 0 8px rgba(56,239,125,0.4);">{uncertainty_str}</span>
+        <div style="text-align: center; border-left: 1px solid rgba(0, 240, 255, 0.3); padding-left: 10px; flex: 1.2;">
+            <span style="color: #bf00ff; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['uncertainty_lbl']}</span><br>
+            <span style="color: #bf00ff; font-size: 15px; font-weight: bold; text-shadow: 0 0 10px #bf00ff;">{uncertainty_str}</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
