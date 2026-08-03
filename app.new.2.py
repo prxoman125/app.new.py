@@ -9,7 +9,7 @@ from scipy import stats
 
 # 1. Configuración de la página (¡SIEMPRE PRIMERO EN STREAMLIT!)
 st.set_page_config(
-    page_title="Simulador de Colimación Óptica",
+    page_title="Simulador de Metrología y Alineación Optomecánica - CIO",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -387,23 +387,23 @@ if not st.session_state.autenticado:
         <div class="top-global-hud">
             <span>● SYSTEM: ONLINE</span>
             <span>ENCRYPTION: AES-256</span>
-            <span>NODE: OPTIC-CORE-01</span>
+            <span>NODE: CIO-OPTICS-LAB</span>
         </div>
 
         <div class="hud-panel-left">
-            <div class="panel-header">DIAGNOSTICO_RED</div>
-            <div class="hud-data-row"><span>LATENCIA:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">12 ms</span></div>
-            <div class="hud-data-row"><span>SENSORES:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">CALIBRADOS</span></div>
-            <div class="hud-data-row"><span>OPTICAL LASER:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">READY</span></div>
-            <div class="hud-data-row"><span>SEGURIDAD:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">ACTIVA</span></div>
+            <div class="panel-header">DIAGNOSTICO_LAB</div>
+            <div class="hud-data-row"><span>INTERFEROMETRO:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">ESTABLE</span></div>
+            <div class="hud-data-row"><span>SENSORES PSD:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">CALIBRADOS</span></div>
+            <div class="hud-data-row"><span>HAZ LASER:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">TEM00</span></div>
+            <div class="hud-data-row"><span>METROLOGÍA:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">ACTIVA</span></div>
         </div>
 
         <div class="hud-panel-right">
-            <div class="panel-header">MODULO_TELEMETRIA</div>
-            <div class="hud-data-row"><span>CPU CORE:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">1.4 GHz</span></div>
-            <div class="hud-data-row"><span>MEMORIA:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">18% REQ</span></div>
-            <div class="hud-data-row"><span>CANAL:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">0xFA992</span></div>
-            <div class="hud-data-row"><span>SSL LINK:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">ESTABLE</span></div>
+            <div class="panel-header">TELEMETRIA_SISTEMA</div>
+            <div class="hud-data-row"><span>ESTACIÓN:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">CIO-LEÓN</span></div>
+            <div class="hud-data-row"><span>ADQUISICIÓN:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">100 kS/s</span></div>
+            <div class="hud-data-row"><span>BANCADA:</span><span style="color:#00f0ff; text-shadow:0 0 6px #00f0ff">OPTOMECÁNICA</span></div>
+            <div class="hud-data-row"><span>ESTABILIDAD:</span><span style="color:#38ef7d; text-shadow:0 0 6px #38ef7d">λ/10</span></div>
         </div>
     """, unsafe_allow_html=True)
     
@@ -434,8 +434,8 @@ if not st.session_state.autenticado:
                         <div class="hud-dot"></div>
                         <div class="hud-scanline"></div>
                     </div>
-                    <div class="login-title">Autenticación Óptica</div>
-                    <div class="login-subtitle">● SISTEMA DE AVALÚO Y COLIMACIÓN LÁSER</div>
+                    <div class="login-title">Autenticación de Laboratorio</div>
+                    <div class="login-subtitle">● SISTEMA DE METROLOGÍA Y ALINEACIÓN ÓPTICA</div>
                 </div>
             </div>
         """, unsafe_allow_html=True)
@@ -453,7 +453,7 @@ if not st.session_state.autenticado:
                     st.session_state.autenticado = True
                     st.session_state.intentos = 0
                     
-                    with st.spinner("🔍 Escaneando parámetros y calibrando sensores..."):
+                    with st.spinner("🔍 Analizando matriz de covarianza y calibrando transductores..."):
                         time.sleep(1.2)
                     st.rerun()
                 else:
@@ -467,11 +467,11 @@ if not st.session_state.autenticado:
 
 
 # =========================================================================
-# 👇 CÓDIGO DEL SIMULADOR A CONTINUACIÓN (UNIFICADO CON ESTÉTICA AZUL/MORADO NEÓN)
+# 👇 CÓDIGO DEL SIMULADOR DE METROLOGÍA ÓPTICA (ESTÉTICA AZUL/MORADO NEÓN)
 # =========================================================================
 
 # --- BASE DE DATOS SQLITE ---
-DB_NAME = "colimacion_historial.db"
+DB_NAME = "metrologia_optica.db"
 
 def init_db():
     conn = sqlite3.connect(DB_NAME)
@@ -480,17 +480,17 @@ def init_db():
         CREATE TABLE IF NOT EXISTS historial (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            perfil TEXT,
+            configuracion TEXT,
             distancia TEXT,
-            h_mira TEXT,
-            h_extra TEXT,
-            spot_size TEXT,
+            eje_referencia TEXT,
+            desplazamiento TEXT,
+            diametro_spot TEXT,
             angulo TEXT,
-            moa REAL,
+            arcmin REAL,
             mrad REAL,
-            direccion TEXT,
-            clics_moa INTEGER,
-            pulsos_mrad INTEGER,
+            sentido TEXT,
+            pasos_micrometricos INTEGER,
+            pulsos_actuador INTEGER,
             incertidumbre TEXT
         )
     ''')
@@ -502,20 +502,20 @@ def save_record_to_db(rec):
     c = conn.cursor()
     c.execute('''
         INSERT INTO historial 
-        (perfil, distancia, h_mira, h_extra, spot_size, angulo, moa, mrad, direccion, clics_moa, pulsos_mrad, incertidumbre)
+        (configuracion, distancia, eje_referencia, desplazamiento, diametro_spot, angulo, arcmin, mrad, sentido, pasos_micrometricos, pulsos_actuador, incertidumbre)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
-        rec["Perfil / Carrera"], rec["Distancia"], rec["Línea Colimación"], 
-        rec["Desviación Impacto"], rec["Spot Size"], rec["Ángulo (α)"], 
-        rec["MOA"], rec["mrad"], rec["Dirección"], rec["Clics (1/4 MOA)"], 
-        rec["Pulsos (0.1 mrad)"], rec["Incertidumbre (±)"]
+        rec["Configuración Experimental"], rec["Distancia Bancada"], rec["Eje de Referencia Óptica"], 
+        rec["Desplazamiento Micrométrico"], rec["Diámetro del Spot"], rec["Ángulo (α)"], 
+        rec["Arcmin"], rec["mrad"], rec["Sentido Corrección"], rec["Pasos (Micrómetro)"], 
+        rec["Pulsos (Actuador Piezoresistivo)"], rec["Incertidumbre Expandida (±)"]
     ))
     conn.commit()
     conn.close()
 
 def load_history_from_db():
     conn = sqlite3.connect(DB_NAME)
-    df = pd.read_sql_query("SELECT id, fecha AS 'Fecha/Hora', perfil AS 'Perfil / Carrera', distancia AS 'Distancia', h_mira AS 'Línea Colimación', h_extra AS 'Desviación Impacto', spot_size AS 'Spot Size', angulo AS 'Ángulo (α)', moa AS 'MOA', mrad AS 'mrad', direccion AS 'Dirección', clics_moa AS 'Clics (1/4 MOA)', pulsos_mrad AS 'Pulsos (0.1 mrad)', incertidumbre AS 'Incertidumbre (±)' FROM historial ORDER BY id DESC", conn)
+    df = pd.read_sql_query("SELECT id, fecha AS 'Fecha/Hora', configuracion AS 'Configuración Experimental', distancia AS 'Distancia Bancada', eje_referencia AS 'Eje de Referencia Óptica', desplazamiento AS 'Desplazamiento Micrométrico', diametro_spot AS 'Diámetro del Spot', angulo AS 'Ángulo (α)', arcmin AS 'Arcmin', mrad AS 'mrad', sentido AS 'Sentido Corrección', pasos_micrometricos AS 'Pasos (Micrómetro)', pulsos_actuador AS 'Pulsos (Actuador Piezoresistivo)', incertidumbre AS 'Incertidumbre Expandida (±)' FROM historial ORDER BY id DESC", conn)
     conn.close()
     return df
 
@@ -690,159 +690,159 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- DICCIONARIOS DE TRADUCCIÓN ---
+# --- DICCIONARIOS DE TRADUCCIÓN (ENFOQUE CIENTÍFICO / METROLÓGICO) ---
 TEXTS = {
     "ES": {
-        "title": "Simulador de Alineación y Colimación Óptica Avanzado",
+        "title": "Simulador Metrológico de Alineación y Óptica Coherente - CIO",
         "lang_select": "Idioma / Language",
         "unit_select": "Sistema de Unidades / Unit System",
         "metric": "Métrico (cm, metros)",
         "imperial": "Imperial (pulgadas, yardas)",
-        "profile_select": "Perfil de Aplicación / Profesión",
-        "profile_placeholder": "-- Seleccione una Profesión / Carrera --",
-        "p1": "Calibración de brazos robóticos (Rango muy corto)",
-        "p2": "Alineación de maquinaria industrial (Rango corto)",
-        "p3": "Topografía y construcción civil (Rango medio)",
-        "p4": "Alineación de colectores solares / Helióstatos (Rango medio-largo)",
-        "p5": "Guiado láser de robótica móvil (Rango largo)",
-        "p6": "Guiado de maquinaria de tunelación (Rango largo-extremo)",
-        "p7": "Alineación de Puentes Colgantes (Rango Largo)",
-        "p8": "Nivelación de Vías de Tren de Alta Velocidad (Rango Medio)",
-        "p9": "Montacargas Autónomos en Almacenes 3D (Rango Corto)",
-        "p10": "Clasificación de Paquetes por Bandas (Rango Muy Corto)",
-        "p11": "Alineación de Antenas Satelitales (Rango Extremo)",
-        "p12": "Calibración de Sensores de Aterrizaje (Rango Medio)",
-        "p13": "Alineación de Hélices en Torres Eólicas (Rango Corto)",
-        "p14": "Inspección Óptica de Cascos de Barcos (Rango Medio)",
-        "p15": "Guiado de Perforadoras en Minería (Rango Largo)",
-        "p16": "Colimación de Telescopios Astronómicos (Rango Extremo)",
-        "p17": "Alineación de Espejos Láser Quirúrgicos (Rango Muy Corto)",
-        "p18": "Guiado Optoelectrónico de Misiles Defensivos (Rango Extremo)",
-        "p19": "Calibración de Sensores LiDAR Automotrices (Rango Medio)",
-        "p20": "Centrado de Turbinas Hidroeléctricas (Rango Corto)",
-        "p21": "Inspección de Deformación en Turbinas de Gas (Rango Corto)",
-        "p22": "Nivelación de Plataformas Petroleras Offshore (Rango Medio-Largo)",
-        "p23": "Alineación de Escáneres LiDAR en Drones (Rango Medio)",
-        "p24": "Colimación de Sistemas Ópticos Micro litográficos (Rango Muy Corto)",
-        "p25": "Control de Flexión en Estructuras de Estadios (Rango Medio)",
+        "profile_select": "Configuración Experimental / Banco Óptico",
+        "profile_placeholder": "-- Seleccione un Arreglo Experimental --",
+        "p1": "Alineación de micro-espejos MEMS (Rango ultra-corto)",
+        "p2": "Interferometría de Michelson en banco (Rango corto)",
+        "p3": "Caracterización de láseres de He-Ne (Rango medio)",
+        "p4": "Prueba de frente de onda para lentes asféricas (Rango medio)",
+        "p5": "Arreglo colimador para fibras ópticas monomodo (Rango medio-largo)",
+        "p6": "Sistema de puntería láser para LIDAR atmosférico (Rango largo)",
+        "p7": "Banco óptico para holografía digital (Rango medio)",
+        "p8": "Calibración de auto-colimadores digitales (Rango medio)",
+        "p9": "Optical Trapping / Pinzas Ópticas (Rango ultra-corto)",
+        "p10": "Espectroscopía Raman con acoplamiento confocal (Rango corto)",
+        "p11": "Transmisión de espacio libre FSO (Free Space Optics) (Rango extremo)",
+        "p12": "Sistema láser de alta potencia para corte Nd:YAG (Rango medio)",
+        "p13": "Metrología de superficies ópticas por deflectometría (Rango corto)",
+        "p14": "Seguimiento optoelectrónico de blancos dinámicos (Rango largo)",
+        "p15": "Interferometría láser de alta precisión para gravimetría (Rango medio)",
+        "p16": "Colimación de telescopios astronómicos de investigación (Rango extremo)",
+        "p17": "Alineación sub-micrométrica para óptica integrada (Rango ultra-corto)",
+        "p18": "Sistemas de guía láser para óptica adaptativa (Rango extremo)",
+        "p19": "Caracterización de perfiles de intensidad TEM00 (Rango medio)",
+        "p20": "Óptica no lineal en cristales BBO (Rango corto)",
+        "p21": "Sensor de frente de onda Shack-Hartmann (Rango corto)",
+        "p22": "Metrología láser de grandes distancias / teodolito óptico (Rango largo)",
+        "p23": "Arreglos fotónicos integrados en silicio (Rango ultra-corto)",
+        "p24": "Litografía óptica de interferencia láser (Rango muy corto)",
+        "p25": "Monitoreo interferométrico de deformación estructural (Rango medio)",
 
-        "params": "Parámetros Geométricos",
-        "phys_params": "Óptica & Entorno Físico",
-        "reset_btn": "Reiniciar Valores a 0",
+        "params": "Parámetros Optomecánicos",
+        "phys_params": "Óptica Coherente y Entorno",
+        "reset_btn": "Reiniciar Parámetros a 0",
         "save_btn": "💾 Registrar Medición (DB)",
         "export_csv": "📥 Exportar Historial (CSV)",
-        "h_mira": "Línea de colimación",
-        "h_extra": "Desviación del punto de impacto / Objetivo",
-        "dist_input": "Distancia al receptor / Destino",
-        "ref_angle_input": "Inclinación eje referencia (°)",
-        "laser_div": "Divergencia Láser (mrad)",
-        "temp_input": "Temperatura (°C)",
-        "press_input": "Presión Atm. (hPa)",
-        "earth_curv": "Activar Curvatura Terrestre",
+        "h_mira": "Eje de referencia óptica",
+        "h_extra": "Desplazamiento micrométrico del haz",
+        "dist_input": "Distancia de propagación en bancada",
+        "ref_angle_input": "Inclinación inicial del banco (°)",
+        "laser_div": "Divergencia del haz (mrad)",
+        "temp_input": "Temperatura de laboratorio (°C)",
+        "press_input": "Presión Atmosférica (hPa)",
+        "earth_curv": "Activar corrección por curvatura/refracción",
         "cm": "cm",
         "m": "m",
         "in": "pulgadas",
         "yd": "yardas",
-        "laser_label": "Eje óptico de referencia",
-        "sight_label": "Eje del sensor ajustable",
-        "target_center": "Centro del Objetivo",
-        "target_point": "Punto Requerido",
-        "title_graph": "Distancia",
-        "req_angle": "Ángulo Requerido (α)",
-        "diff_height": "Diferencia Altura Total",
-        "sight_angle": "Ángulo de Inclinación (α)",
-        "angular_adj": "Ajuste Angular",
-        "direction": "Dirección",
-        "direction_up": "Arriba",
-        "direction_down": "Abajo",
-        "spot_size_lbl": "Diámetro de Haz (Spot)",
-        "curv_drop_lbl": "Caída x Curvatura",
-        "uncertainty_lbl": "Incertidumbre (SciPy)",
-        "history_title": "Historial en Base de Datos (SQLite)",
+        "laser_label": "Eje Óptico Teórico",
+        "sight_label": "Eje del Haz Ajustado",
+        "target_center": "Centro del Sensor PSD",
+        "target_point": "Centroide del Haz Láser",
+        "title_graph": "Propagación",
+        "req_angle": "Ángulo de Corrección (α)",
+        "diff_height": "Desviación Lineal Total",
+        "sight_angle": "Ángulo de Inclinación del Haz (α)",
+        "angular_adj": "Ajuste Angular (Resolución)",
+        "direction": "Sentido de Corrección",
+        "direction_up": "Ascendente (+Z)",
+        "direction_down": "Descendente (-Z)",
+        "spot_size_lbl": "Diámetro del Spot (1/e²)",
+        "curv_drop_lbl": "Corrección Atmosférica",
+        "uncertainty_lbl": "Incertidumbre Expandida (SciPy)",
+        "history_title": "Historial Metrológico en Base de Datos (SQLite)",
         "clear_history": "Borrar Base de Datos",
-        "confirm_clear_msg": "¿Estás seguro de que deseas borrar toda la base de datos?",
+        "confirm_clear_msg": "¿Estás seguro de que deseas vaciar el registro metrológico?",
         "confirm_yes": "✔ Sí, Borrar",
         "confirm_cancel": "✖ Cancelar",
-        "empty_history": "No hay registros guardados en la base de datos.",
-        "select_prompt": "⚠️ Por favor, seleccione un Perfil de Aplicación / Profesión en la barra lateral para iniciar la simulación.",
-        "record_saved": "✅ Medición guardada permanentemente en SQLite.",
-        "target_2d_title": "🎯 Vista Frontal 2D (Retícula / Diana)"
+        "empty_history": "No hay registros experimentales guardados en la base de datos.",
+        "select_prompt": "⚠️ Por favor, seleccione una Configuración Experimental / Banco Óptico en la barra lateral para iniciar la simulación metrológica.",
+        "record_saved": "✅ Medición metrológica registrada permanentemente en SQLite.",
+        "target_2d_title": "🎯 Perfil Transversal 2D (Sensor PSD / Perfilómetro)"
     },
     "EN": {
-        "title": "Advanced Optical Alignment & Collimation Simulator",
+        "title": "Metrological Simulator of Coherent Alignment & Optics - CIO",
         "lang_select": "Language / Idioma",
         "unit_select": "Unit System / Sistema de Unidades",
         "metric": "Metric (cm, meters)",
         "imperial": "Imperial (inches, yards)",
-        "profile_select": "Application Profile / Profession",
-        "profile_placeholder": "-- Select a Profession / Career --",
-        "p1": "Robotic Arm Calibration (Very Short Range)",
-        "p2": "Industrial Machinery Alignment (Short Range)",
-        "p3": "Surveying & Civil Construction (Medium Range)",
-        "p4": "Solar Collector / Heliostat Alignment (Medium-Long Range)",
-        "p5": "Mobile Robotics Laser Guidance (Long Range)",
-        "p6": "Tunneling Machinery Guidance (Long-Extreme Range)",
-        "p7": "Suspension Bridge Alignment (Long Range)",
-        "p8": "High-Speed Train Track Leveling (Medium Range)",
-        "p9": "Autonomous Forklifts in 3D Warehouses (Short Range)",
-        "p10": "Belt Package Sorting Systems (Very Short Range)",
-        "p11": "Satellite Dish Alignment (Extreme Range)",
-        "p12": "Aircraft Landing Sensor Calibration (Medium Range)",
-        "p13": "Wind Turbine Blade Alignment (Short Range)",
-        "p14": "Ship Hull Optical Inspection (Medium Range)",
-        "p15": "Open-Pit Mining Drill Guidance (Long Range)",
-        "p16": "Astronomical Telescope Collimation (Extreme Range)",
-        "p17": "Surgical Laser Mirror Alignment (Very Short Range)",
-        "p18": "Defensive Missile Optoelectronic Guidance (Extreme Range)",
-        "p19": "Automotive LiDAR Sensor Calibration (Medium Range)",
-        "p20": "Hydroelectric Turbine Centering (Short Range)",
-        "p21": "Gas Turbine Strain Inspection (Short Range)",
-        "p22": "Offshore Oil Rig Platform Leveling (Medium-Long Range)",
-        "p23": "Drone LiDAR Scanner Alignment (Medium Range)",
-        "p24": "Microlithographic Optical System Collimation (Very Short Range)",
-        "p25": "Stadium Roof Deflection Monitoring (Medium Range)",
+        "profile_select": "Experimental Setup / Optical Bench",
+        "profile_placeholder": "-- Select an Experimental Setup --",
+        "p1": "MEMS Micro-mirror Alignment (Ultra-short Range)",
+        "p2": "Benchtop Michelson Interferometry (Short Range)",
+        "p3": "He-Ne Laser Characterization (Medium Range)",
+        "p4": "Aspheric Lens Wavefront Testing (Medium Range)",
+        "p5": "Single-mode Fiber Collimator Array (Medium-Long Range)",
+        "p6": "Atmospheric LIDAR Laser Targeting System (Long Range)",
+        "p7": "Digital Holography Optical Bench (Medium Range)",
+        "p8": "Digital Autocollimator Calibration (Medium Range)",
+        "p9": "Optical Tweezers Setup (Ultra-short Range)",
+        "p10": "Confocal Raman Spectroscopy Coupling (Short Range)",
+        "p11": "Free Space Optics (FSO) Transmission (Extreme Range)",
+        "p12": "Nd:YAG High-Power Laser Cutting System (Medium Range)",
+        "p13": "Optical Surface Metrology by Deflectometry (Short Range)",
+        "p14": "Optoelectronic Dynamic Target Tracking (Long Range)",
+        "p15": "High-Precision Laser Interferometry for Gravimetry (Medium Range)",
+        "p16": "Research Astronomical Telescope Collimation (Extreme Range)",
+        "p17": "Sub-micrometric Alignment for Integrated Optics (Ultra-short Range)",
+        "p18": "Adaptive Optics Laser Guide Star Systems (Extreme Range)",
+        "p19": "TEM00 Intensity Profile Characterization (Medium Range)",
+        "p20": "Nonlinear Optics in BBO Crystals (Short Range)",
+        "p21": "Shack-Hartmann Wavefront Sensor (Short Range)",
+        "p22": "Long-Range Laser Metrology / Optical Theodolite (Long Range)",
+        "p23": "Silicon Integrated Photonic Arrays (Ultra-short Range)",
+        "p24": "Laser Interference Optical Lithography (Very Short Range)",
+        "p25": "Interferometric Structural Strain Monitoring (Medium Range)",
 
-        "params": "Geometric Parameters",
-        "phys_params": "Optics & Physical Environment",
-        "reset_btn": "Reset Values to 0",
+        "params": "Optomechanical Parameters",
+        "phys_params": "Coherent Optics & Environment",
+        "reset_btn": "Reset Parameters to 0",
         "save_btn": "💾 Save Measurement (DB)",
         "export_csv": "📥 Export History (CSV)",
-        "h_mira": "Collimation Line",
-        "h_extra": "Impact Point Deviation / Target Offset",
-        "dist_input": "Distance to Receiver / Destination",
-        "ref_angle_input": "Ref. Axis Inclination (°)",
-        "laser_div": "Laser Divergence (mrad)",
-        "temp_input": "Temperature (°C)",
-        "press_input": "Atm. Pressure (hPa)",
-        "earth_curv": "Enable Earth Curvature",
+        "h_mira": "Optical Reference Axis",
+        "h_extra": "Micrometric Beam Displacement",
+        "dist_input": "Optical Bench Propagation Distance",
+        "ref_angle_input": "Initial Bench Inclination (°)",
+        "laser_div": "Beam Divergence (mrad)",
+        "temp_input": "Laboratory Temperature (°C)",
+        "press_input": "Atmospheric Pressure (hPa)",
+        "earth_curv": "Enable Curvature/Refraction Correction",
         "cm": "cm",
         "m": "m",
         "in": "inches",
         "yd": "yards",
-        "laser_label": "Reference Optical Axis",
-        "sight_label": "Adjustable Sensor Axis",
-        "target_center": "Target Center",
-        "target_point": "Required Point",
-        "title_graph": "Distance",
-        "req_angle": "Required Angle (α)",
-        "diff_height": "Total Height Diff.",
-        "sight_angle": "Inclination Angle (α)",
-        "angular_adj": "Angular Adjustment",
-        "direction": "Direction",
-        "direction_up": "Up",
-        "direction_down": "Down",
-        "spot_size_lbl": "Beam Diameter (Spot)",
-        "curv_drop_lbl": "Curvature Drop",
-        "uncertainty_lbl": "Uncertainty (SciPy)",
-        "history_title": "Database Records (SQLite)",
+        "laser_label": "Theoretical Optical Axis",
+        "sight_label": "Aligned Beam Axis",
+        "target_center": "PSD Sensor Center",
+        "target_point": "Laser Beam Centroid",
+        "title_graph": "Propagation",
+        "req_angle": "Correction Angle (α)",
+        "diff_height": "Total Linear Deviation",
+        "sight_angle": "Beam Inclination Angle (α)",
+        "angular_adj": "Angular Adjustment (Resolution)",
+        "direction": "Correction Sense",
+        "direction_up": "Ascending (+Z)",
+        "direction_down": "Descending (-Z)",
+        "spot_size_lbl": "Beam Waist Diameter (1/e²)",
+        "curv_drop_lbl": "Atmospheric Correction",
+        "uncertainty_lbl": "Expanded Uncertainty (SciPy)",
+        "history_title": "Metrological Database Records (SQLite)",
         "clear_history": "Clear Database",
-        "confirm_clear_msg": "Are you sure you want to clear the entire database?",
+        "confirm_clear_msg": "Are you sure you want to clear the metrological registry?",
         "confirm_yes": "✔ Yes, Clear",
         "confirm_cancel": "✖ Cancel",
-        "empty_history": "No records saved in database yet.",
-        "select_prompt": "⚠️ Please select an Application Profile / Profession in the sidebar to start the simulation.",
-        "record_saved": "✅ Measurement saved permanently into SQLite.",
-        "target_2d_title": "🎯 Vista Frontal 2D (Retícula / Diana)"
+        "empty_history": "No experimental records saved in database yet.",
+        "select_prompt": "⚠️ Please select an Experimental Setup / Optical Bench in the sidebar to start the metrological simulation.",
+        "record_saved": "✅ Metrological measurement recorded permanently into SQLite.",
+        "target_2d_title": "🎯 Transverse 2D Profile (PSD Sensor / Profilometer)"
     }
 }
 
@@ -852,7 +852,7 @@ lang = st.sidebar.selectbox("Idioma / Language", ["Español", "English"])
 lang_code = "ES" if lang == "Español" else "EN"
 txt = TEXTS[lang_code]
 
-# --- MENÚ DESPLEGABLE DE PROFESIONES ---
+# --- MENÚ DESPLEGABLE DE CONFIGURACIONES EXPERIMENTALES ---
 st.sidebar.header(txt["profile_select"])
 profiles_options = [txt["profile_placeholder"]] + [
     txt["p1"], txt["p2"], txt["p3"], txt["p4"], txt["p5"], txt["p6"],
@@ -975,7 +975,7 @@ st.markdown(f"""
             {txt['title']}
         </h2>
         <p style="color: #c084fc; margin: 0; font-size: 13px; opacity: 0.9;">
-            Alineación de precisión óptica & Física Atmosférica | Perfil Activo: <b style="color: #00f0ff;">{profile if profile != txt['profile_placeholder'] else 'Ninguno'}</b>
+            Centro de Investigaciones en Óptica (CIO) | Configuración Activa: <b style="color: #00f0ff;">{profile if profile != txt['profile_placeholder'] else 'Ninguna'}</b>
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -1011,7 +1011,7 @@ else:
     angulo_rad = 0.0
 
 angulo_deg = math.degrees(angulo_rad)
-moa, mrad = angulo_deg * 60, angulo_rad * 1000
+arcmin, mrad = angulo_deg * 60, angulo_rad * 1000
 diff_height_display = diferencia_altura_cm if is_metric else diferencia_altura_cm / 2.54
 spot_size_display = spot_diameter_cm if is_metric else spot_diameter_cm / 2.54
 curv_drop_display = curv_drop_cm if is_metric else curv_drop_cm / 2.54
@@ -1022,34 +1022,34 @@ if D_cm > 0:
     sigma_angle_rad = math.sqrt((delta_h_cm / D_cm)**2 + (diferencia_altura_cm * delta_d_cm / (D_cm**2 + diferencia_altura_cm**2))**2)
     confidence_factor = stats.norm.ppf(0.975)
     uncertainty_mrad = sigma_angle_rad * 1000.0 * confidence_factor
-    uncertainty_moa = math.degrees(sigma_angle_rad) * 60.0 * confidence_factor
+    uncertainty_arcmin = math.degrees(sigma_angle_rad) * 60.0 * confidence_factor
 else:
     uncertainty_mrad = 0.0
-    uncertainty_moa = 0.0
+    uncertainty_arcmin = 0.0
 
 uncertainty_str = f"±{uncertainty_mrad:.2f} mrad (95% IC)"
 
 is_up = (angulo_deg >= 0)
 direccion_str = txt["direction_up"] if is_up else txt["direction_down"]
 
-clicks_moa = abs(round(moa * 4))
-pulsos_mrad = abs(round(mrad * 10))
+pasos_micrometricos = abs(round(arcmin * 4))
+pulsos_actuador = abs(round(mrad * 10))
 
 # --- REGISTRO A BASE DE DATOS EN SQLite ---
 if save_clicked:
     current_record = {
-        "Perfil / Carrera": profile,
-        "Distancia": f"{D_val:.1f} {d_unit}",
-        "Línea Colimación": f"{H_mira:.2f} {h_unit}",
-        "Desviación Impacto": f"{H_extra:.2f} {h_unit}",
-        "Spot Size": f"{spot_size_display:.2f} {h_unit}",
+        "Configuración Experimental": profile,
+        "Distancia Bancada": f"{D_val:.1f} {d_unit}",
+        "Eje de Referencia Óptica": f"{H_mira:.2f} {h_unit}",
+        "Desplazamiento Micrométrico": f"{H_extra:.2f} {h_unit}",
+        "Diámetro del Spot": f"{spot_size_display:.2f} {h_unit}",
         "Ángulo (α)": f"{angulo_deg:.4f}°",
-        "MOA": moa,
+        "Arcmin": arcmin,
         "mrad": mrad,
-        "Dirección": direccion_str,
-        "Clics (1/4 MOA)": clicks_moa,
-        "Pulsos (0.1 mrad)": pulsos_mrad,
-        "Incertidumbre (±)": uncertainty_str
+        "Sentido Corrección": direccion_str,
+        "Pasos (Micrómetro)": pasos_micrometricos,
+        "Pulsos (Actuador Piezoresistivo)": pulsos_actuador,
+        "Incertidumbre Expandida (±)": uncertainty_str
     }
     save_record_to_db(current_record)
     st.sidebar.success(txt["record_saved"])
@@ -1112,7 +1112,7 @@ with col_3d:
         scene=dict(
             aspectmode='manual', aspectratio=dict(x=2.0, y=1, z=1.1),
             xaxis=dict(title='Distancia (cm)', backgroundcolor="#050814", gridcolor="#132347", tickfont=dict(color="#c084fc")),
-            yaxis=dict(title='Eje Lateral', backgroundcolor="#050814", gridcolor="#132347", tickfont=dict(color="#c084fc")),
+            yaxis=dict(title='Eje Transversal', backgroundcolor="#050814", gridcolor="#132347", tickfont=dict(color="#c084fc")),
             zaxis=dict(title='Elevación (cm)', backgroundcolor="#050814", gridcolor="#132347", tickfont=dict(color="#c084fc")),
             camera=dict(eye=dict(x=1.6, y=-1.4, z=0.6))
         ),
@@ -1180,7 +1180,7 @@ st.markdown(f"""
         </div>
         <div style="text-align: center; border-left: 1px solid rgba(0, 149, 255, 0.25); padding-left: 10px; flex: 1.2;">
             <span style="color: #c084fc; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['angular_adj']}</span><br>
-            <span style="color: #00f0ff; font-size: 17px; font-weight: bold; text-shadow: 0 0 8px rgba(0,240,255,0.5);">{moa:.2f} MOA | {mrad:.2f} mrad</span>
+            <span style="color: #00f0ff; font-size: 17px; font-weight: bold; text-shadow: 0 0 8px rgba(0,240,255,0.5);">{arcmin:.2f} arcmin | {mrad:.2f} mrad</span>
         </div>
         <div style="text-align: center; border-left: 1px solid rgba(0, 149, 255, 0.25); padding-left: 10px; flex: 1.2;">
             <span style="color: #c084fc; font-size: 11px; font-weight: bold; text-transform: uppercase;">{txt['spot_size_lbl']}</span><br>
@@ -1208,7 +1208,7 @@ with col_export:
         st.download_button(
             label=txt["export_csv"],
             data=csv_data,
-            file_name="historial_colimacion.csv",
+            file_name="historial_metrologia_optica.csv",
             mime="text/csv",
             use_container_width=True
         )
@@ -1232,7 +1232,7 @@ with col_hist_btn:
 
         with col_no:
             st.markdown('<div class="btn-confirm-cancel">', unsafe_allow_html=True)
-            if st.button(txt["confirm_confirm_cancel"] if "confirm_confirm_cancel" in txt else txt["confirm_cancel"], use_container_width=True):
+            if st.button(txt["confirm_cancel"], use_container_width=True):
                 st.session_state["confirm_clear"] = False
                 st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
@@ -1243,6 +1243,9 @@ if not df_db.empty:
         use_container_width=True,
         hide_index=True,
         column_config={
-            "MOA": st.column_config.NumberColumn("MOA", format="%.2f"),
+            "Arcmin": st.column_config.NumberColumn("Arcmin", format="%.2f"),
             "mrad": st.column_config.NumberColumn("mrad", format="%.2f"),
         }
+    )
+else:
+    st.info(txt["empty_history"])
